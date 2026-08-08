@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="carrinhoCompras"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-01 03:46:26 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAzOjEwOjIxICI7MjU3Ng=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAzOjQ2OjI2ICI7MzsyNzAw"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="produto" type="String" array="False" size=""/>
+            <declare name="preco" type="Real" array="False" size=""/>
+            <assign variable="preco" expression="0"/>
+            <declare name="quantidade" type="Integer" array="False" size=""/>
+            <assign variable="quantidade" expression="0"/>
+            <declare name="totalCompra" type="Real" array="False" size=""/>
+            <declare name="valorPago" type="Real" array="False" size=""/>
+            <assign variable="valorPago" expression="0"/>
+            <declare name="troco" type="Real" array="False" size=""/>
+            <assign variable="troco" expression="0"/>
+            <output expression="&quot;Digite o nome do produto&quot;" newline="True"/>
+            <input variable="produto"/>
+            <output expression="&quot;Digite a quantidade&quot;" newline="True"/>
+            <input variable="quantidade"/>
+            <output expression="&quot;Digite o valor do produto&quot;" newline="True"/>
+            <input variable="preco"/>
+            <assign variable="totalCompra" expression="preco * quantidade"/>
+            <output expression="&quot;O total da compra &#233; :&quot; &amp; totalCompra" newline="True"/>
+            <output expression="&quot;Digite o valor pago&quot;" newline="True"/>
+            <input variable="valorPago"/>
+            <output expression="&quot;O valor pago foi :&quot; &amp; valorPago" newline="True"/>
+            <output expression="&quot;O troco &#233; :&quot; &amp; valorPago - totalCompra" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

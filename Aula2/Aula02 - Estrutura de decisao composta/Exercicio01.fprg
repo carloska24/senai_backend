@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio10"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Verifica se a pessoa tem idade e ingresso v&#225;lidos para entrar no parque."/>
+        <attribute name="saved" value="2026-08-08 12:03:39 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjAwOjAwOjAwICI7MA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEyOjAzOjM5ICI7MjsyNzAz"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="idade" type="Integer" array="False" size=""/>
+            <declare name="ingresso" type="String" array="False" size=""/>
+            <declare name="possuiIngresso" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Digite a idade da pessoa:&quot;" newline="True"/>
+            <input variable="idade"/>
+            <output expression="&quot;Possui ingresso? (Sim/N&#227;o):&quot;" newline="True"/>
+            <input variable="ingresso"/>
+            <assign variable="possuiIngresso" expression="ingresso = &quot;sim&quot; || ingresso = &quot;Sim&quot; || ingresso = &quot;SIM&quot;"/>
+            <if expression="idade &gt;= 18 &amp;&amp; possuiIngresso">
+                <then>
+                    <output expression="&quot;Entrada permitida&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;Entrada negada&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio12"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Calcula m&#233;dia e verifica aprova&#231;&#227;o com base em notas e frequ&#234;ncia."/>
+        <attribute name="saved" value="2026-08-08 12:08:57 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjAwOjAwOjAwICI7MA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEyOjA4OjU3ICI7MjsyNzA4"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="nota1" type="Real" array="False" size=""/>
+            <declare name="nota2" type="Real" array="False" size=""/>
+            <declare name="nota3" type="Real" array="False" size=""/>
+            <declare name="frequencia" type="Real" array="False" size=""/>
+            <declare name="media" type="Real" array="False" size=""/>
+            <declare name="aprovado" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Digite a primeira nota:&quot;" newline="True"/>
+            <input variable="nota1"/>
+            <output expression="&quot;Digite a segunda nota:&quot;" newline="True"/>
+            <input variable="nota2"/>
+            <output expression="&quot;Digite a terceira nota:&quot;" newline="True"/>
+            <input variable="nota3"/>
+            <output expression="&quot;Digite o percentual de frequ&#234;ncia:&quot;" newline="True"/>
+            <input variable="frequencia"/>
+            <assign variable="media" expression="(nota1 + nota2 + nota3) / 3"/>
+            <assign variable="aprovado" expression="media &gt;= 6.0 || frequencia &gt;= 75"/>
+            <if expression="aprovado">
+                <then>
+                    <output expression="&quot;Aluno aprovado&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;Aluno reprovado&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio 01 - Flowgorithm: Classificação de Temperatura</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --hot: #ef4444;
+            --pleasant: #10b981;
+            --cold: #06b6d4;
+            --flow-shape-bg: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        header {
+            text-align: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Simulator Styles */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        input[type="number"] {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #0f172a;
+            font-weight: 700;
+            border: none;
+            padding: 0.85rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.1s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-val {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .result-hot { color: var(--hot); text-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+        .result-pleasant { color: var(--pleasant); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+        .result-cold { color: var(--cold); text-shadow: 0 0 10px rgba(6, 182, 212, 0.4); }
+
+        /* Flowchart Visualizer */
+        .flow-node {
+            background: var(--flow-shape-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            text-align: center;
+            margin: 0.75rem 0;
+            position: relative;
+            font-family: monospace;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .flow-node.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .flow-node.oval {
+            border-radius: 2rem;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--primary);
+        }
+
+        .flow-node.rhombus {
+            border-radius: 0.25rem;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+        }
+
+        .flow-node.io {
+            transform: skewX(-10deg);
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .steps-list li {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .steps-list code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            color: #38bdf8;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Exemplo Flowgorithm - Exercício 01</h1>
+            <p><strong>Enunciado:</strong> A temperatura pode ser classificada de acordo com seu valor. Se for maior que 30°C, está <strong>quente</strong>. Se estiver entre 20°C e 30°C (inclusive), o clima está <strong>agradável</strong>. Se for menor que 20°C, está <strong>frio</strong>.</p>
+        </header>
+
+        <div class="grid">
+            <!-- Simulação -->
+            <div class="card">
+                <h2>🧪 Simulador Interativo</h2>
+                <form id="tempForm">
+                    <div class="input-group">
+                        <label for="tempInput">Digite a Temperatura (°C):</label>
+                        <input type="number" id="tempInput" step="0.1" placeholder="Ex: 25.5" required>
+                    </div>
+                    <button type="submit">Executar Algoritmo</button>
+                </form>
+
+                <div class="result-box" id="resultContainer" style="display: none;">
+                    <div class="result-title">Saída do Algoritmo:</div>
+                    <div class="result-val" id="resultText">-</div>
+                </div>
+            </div>
+
+            <!-- Estrutura do Flowgorithm -->
+            <div class="card">
+                <h2>📋 Passos no Flowgorithm</h2>
+                <ul class="steps-list">
+                    <li>1. <strong>Declaração:</strong> Criar variável <code>temperatura</code> do tipo <code>Real</code>.</li>
+                    <li>2. <strong>Saída:</strong> Exibir <code>"Digite a temperatura em graus Celsius:"</code></li>
+                    <li>3. <strong>Entrada:</strong> Ler valor para <code>temperatura</code>.</li>
+                    <li>4. <strong>Estrutura de Decisão (Se):</strong>
+                        <br>&bull; Condição: <code>temperatura &gt; 30</code>
+                        <br>&bull; <strong>Verdadeiro:</strong> Saída <code>"Está quente"</code>
+                        <br>&bull; <strong>Falso:</strong> Novo <strong>Se</strong> com <code>temperatura &gt;= 20</code>
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull; <strong>Verdadeiro:</strong> Saída <code>"O clima está agradável"</code>
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull; <strong>Falso:</strong> Saída <code>"Está frio"</code>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Visualizador do Fluxograma -->
+        <div class="card">
+            <h2>📐 Fluxograma (Representação Visual)</h2>
+            <div style="max-width: 500px; margin: 0 auto;">
+                <div class="flow-node oval" id="node-start">Início (Main)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node" id="node-decl">Declarar Real temperatura</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node io" id="node-output-prompt">Saída "Digite a temperatura..."</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node io" id="node-input">Entrada temperatura</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node rhombus" id="node-if1">temperatura > 30 ?</div>
+                
+                <div style="display: flex; justify-content: space-around; margin: 1rem 0;">
+                    <div style="flex: 1; text-align: center; padding: 0.5rem; border-left: 2px solid var(--hot);">
+                        <span style="color: var(--hot); font-weight: bold;">[SIM]</span>
+                        <div class="flow-node io" id="node-out-hot" style="margin-top: 0.5rem;">Saída "Está quente"</div>
+                    </div>
+                    <div style="flex: 1; text-align: center; padding: 0.5rem; border-left: 2px solid var(--primary);">
+                        <span style="color: var(--text-muted); font-weight: bold;">[NÃO]</span>
+                        <div class="flow-node rhombus" id="node-if2" style="margin-top: 0.5rem;">temperatura >= 20 ?</div>
+                        
+                        <div style="display: flex; justify-content: space-around; margin-top: 0.5rem;">
+                            <div style="flex: 1; padding: 0.2rem;">
+                                <span style="color: var(--pleasant); font-weight: bold; font-size: 0.8rem;">[SIM]</span>
+                                <div class="flow-node io" id="node-out-pleasant" style="font-size: 0.8rem;">"O clima está agradável"</div>
+                            </div>
+                            <div style="flex: 1; padding: 0.2rem;">
+                                <span style="color: var(--cold); font-weight: bold; font-size: 0.8rem;">[NÃO]</span>
+                                <div class="flow-node io" id="node-out-cold" style="font-size: 0.8rem;">"Está frio"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node oval" id="node-end">Fim</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('tempForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const temp = parseFloat(document.getElementById('tempInput').value);
+            const resContainer = document.getElementById('resultContainer');
+            const resText = document.getElementById('resultText');
+
+            // Reset active nodes
+            document.querySelectorAll('.flow-node').forEach(node => node.classList.remove('active'));
+
+            // Highlight basic steps
+            document.getElementById('node-start').classList.add('active');
+            document.getElementById('node-decl').classList.add('active');
+            document.getElementById('node-output-prompt').classList.add('active');
+            document.getElementById('node-input').classList.add('active');
+            document.getElementById('node-if1').classList.add('active');
+
+            resContainer.style.display = 'block';
+
+            if (temp > 30) {
+                resText.innerText = "Está quente";
+                resText.className = "result-val result-hot";
+                document.getElementById('node-out-hot').classList.add('active');
+            } else {
+                document.getElementById('node-if2').classList.add('active');
+                if (temp >= 20) {
+                    resText.innerText = "O clima está agradável";
+                    resText.className = "result-val result-pleasant";
+                    document.getElementById('node-out-pleasant').classList.add('active');
+                } else {
+                    resText.innerText = "Está frio";
+                    resText.className = "result-val result-cold";
+                    document.getElementById('node-out-cold').classList.add('active');
+                }
+            }
+            document.getElementById('node-end').classList.add('active');
+        });
+    </script>
+</body>
+</html>

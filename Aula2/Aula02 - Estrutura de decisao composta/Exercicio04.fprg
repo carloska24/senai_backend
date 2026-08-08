@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio13"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Verifica se a pessoa pode dirigir com idade, carteira ou instrutor."/>
+        <attribute name="saved" value="2026-08-08 12:14:09 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjAwOjAwOjAwICI7MA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEyOjE0OjA5ICI7MjsyNzAy"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="idade" type="Integer" array="False" size=""/>
+            <declare name="temCarteira" type="String" array="False" size=""/>
+            <declare name="acompanhaInstrutor" type="String" array="False" size=""/>
+            <declare name="podeDirigir" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Digite a idade da pessoa:&quot;" newline="True"/>
+            <input variable="idade"/>
+            <output expression="&quot;Possui carteira de motorista? (Sim/N&#227;o):&quot;" newline="True"/>
+            <input variable="temCarteira"/>
+            <output expression="&quot;Est&#225; acompanhada por um instrutor habilitado? (Sim/N&#227;o):&quot;" newline="True"/>
+            <input variable="acompanhaInstrutor"/>
+            <assign variable="podeDirigir" expression="idade &gt;= 18 &amp;&amp; (temCarteira = &quot;sim&quot; || temCarteira = &quot;Sim&quot; || temCarteira = &quot;SIM&quot; || acompanhaInstrutor = &quot;sim&quot; || acompanhaInstrutor = &quot;Sim&quot; || acompanhaInstrutor = &quot;SIM&quot;)"/>
+            <if expression="podeDirigir">
+                <then>
+                    <output expression="&quot;Pode dirigir&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;N&#227;o pode dirigir&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

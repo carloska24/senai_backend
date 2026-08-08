@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio11"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Verifica se o cliente recebe desconto por valor da compra ou VIP."/>
+        <attribute name="saved" value="2026-08-08 12:06:34 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjAwOjAwOjAwICI7MA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEyOjA2OjM0ICI7MzsyNzAy"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="valorCompra" type="Real" array="False" size=""/>
+            <declare name="clienteVIP" type="String" array="False" size=""/>
+            <declare name="recebeDesconto" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Digite o valor da compra:&quot;" newline="True"/>
+            <input variable="valorCompra"/>
+            <output expression="&quot;Cliente &#233; VIP? (Sim/N&#227;o):&quot;" newline="True"/>
+            <input variable="clienteVIP"/>
+            <assign variable="recebeDesconto" expression="valorCompra &gt; 200 || clienteVIP = &quot;sim&quot; || clienteVIP = &quot;Sim&quot; || clienteVIP = &quot;SIM&quot;"/>
+            <if expression="recebeDesconto">
+                <then>
+                    <output expression="&quot;Cliente recebe desconto&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;Cliente n&#227;o recebe desconto&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value="Exercicio05"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Cálculo de Imposto de Renda por Faixa Salarial"/>
+        <attribute name="saved" value="2026-08-08 03:28:00 PM"/>
+        <attribute name="created" value="2026-08-08 03:28:00 PM"/>
+        <attribute name="edited" value="2026-08-08 03:28:00 PM"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="salario" type="Real" array="False" size=""/>
+            <declare name="aliquota" type="Real" array="False" size=""/>
+            <declare name="valorImposto" type="Real" array="False" size=""/>
+            <declare name="salarioLiquido" type="Real" array="False" size=""/>
+            <output expression="&quot;Digite o salário do funcionário (R$):&quot;" newline="True"/>
+            <input variable="salario"/>
+            <if expression="salario &lt;= 2000">
+                <then>
+                    <assign variable="aliquota" expression="0"/>
+                </then>
+                <else>
+                    <if expression="salario &lt;= 3500">
+                        <then>
+                            <assign variable="aliquota" expression="10"/>
+                        </then>
+                        <else>
+                            <if expression="salario &lt;= 5000">
+                                <then>
+                                    <assign variable="aliquota" expression="15"/>
+                                </then>
+                                <else>
+                                    <assign variable="aliquota" expression="20"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+            <assign variable="valorImposto" expression="salario * aliquota / 100"/>
+            <assign variable="salarioLiquido" expression="salario - valorImposto"/>
+            <output expression="&quot;Salário informado (R$):&quot;" newline="True"/>
+            <output expression="salario" newline="True"/>
+            <output expression="&quot;Valor do imposto (R$):&quot;" newline="True"/>
+            <output expression="valorImposto" newline="True"/>
+            <output expression="&quot;Salário após o desconto (R$):&quot;" newline="True"/>
+            <output expression="salarioLiquido" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

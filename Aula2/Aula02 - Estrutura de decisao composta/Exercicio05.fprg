@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio15"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Verifica se o caractere digitado &#233; uma vogal ou n&#227;o."/>
+        <attribute name="saved" value="2026-08-08 12:31:43 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjAwOjAwOjAwICI7MA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEyOjMxOjQzICI7MzsyNzAw"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="letra" type="String" array="False" size=""/>
+            <declare name="vogal" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Digite uma letra:&quot;" newline="True"/>
+            <input variable="letra"/>
+            <assign variable="vogal" expression="letra = &quot;a&quot; || letra = &quot;e&quot; || letra = &quot;i&quot; || letra = &quot;o&quot; || letra = &quot;u&quot; || letra = &quot;A&quot; || letra = &quot;E&quot; || letra = &quot;I&quot; || letra = &quot;O&quot; || letra = &quot;U&quot;"/>
+            <if expression="vogal">
+                <then>
+                    <output expression="&quot;Vogal&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;N&#227;o &#233; vogal&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

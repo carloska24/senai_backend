@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Media"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-01 02:48:52 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAyOjAyOjQ1ICI7MjU4Mg=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAyOjQ4OjUyICI7MjsyNjk5"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="nota1" type="Real" array="False" size=""/>
+            <declare name="nota2" type="Real" array="False" size=""/>
+            <output expression="&quot;Digite a primeira nota&quot;" newline="True"/>
+            <input variable="nota1"/>
+            <output expression="&quot;Digite a segunda nota&quot;" newline="True"/>
+            <input variable="nota2"/>
+            <output expression="&quot;A media entre as duas notas &#233;: &quot; &amp; ((nota1 + nota2) / 2)" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

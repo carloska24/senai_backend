@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio04"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-08 10:17:17 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjA5OjQ2OjM0ICI7MjYwMg=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDg7IjEwOjE3OjE3ICI7MTE7Mjc1MA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="letra" type="String" array="False" size=""/>
+            <declare name="correto" type="Boolean" array="False" size=""/>
+            <assign variable="correto" expression="false"/>
+            <output expression="&quot; digite uma letra &quot;" newline="True"/>
+            <input variable="letra"/>
+            <assign variable="correto" expression="letra == &quot;Z&quot;"/>
+            <if expression="correto">
+                <then>
+                    <output expression="&quot; Letra Correta! &quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot; Letra incorreta! &quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

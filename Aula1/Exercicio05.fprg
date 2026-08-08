@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="BaseRetangulo"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-01 02:51:20 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAyOjQ4OjU1ICI7MjU5Mw=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjAyOjUxOjIwICI7MTsyNjg3"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="base" type="Integer" array="False" size=""/>
+            <declare name="altura" type="Integer" array="False" size=""/>
+            <output expression="&quot;Digite a base&quot;" newline="True"/>
+            <input variable="base"/>
+            <output expression="&quot;Digite a altura&quot;" newline="True"/>
+            <input variable="altura"/>
+            <output expression="&quot;A area do retangulo &#233;: &quot; &amp; base * altura" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

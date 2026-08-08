@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value="Exercicio04"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Desconto por Valor de Compra"/>
+        <attribute name="saved" value="2026-08-08 03:25:00 PM"/>
+        <attribute name="created" value="2026-08-08 03:25:00 PM"/>
+        <attribute name="edited" value="2026-08-08 03:25:00 PM"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="valorCompra" type="Real" array="False" size=""/>
+            <declare name="percentualDesconto" type="Real" array="False" size=""/>
+            <declare name="valorDesconto" type="Real" array="False" size=""/>
+            <declare name="valorFinal" type="Real" array="False" size=""/>
+            <output expression="&quot;Digite o valor da compra (R$):&quot;" newline="True"/>
+            <input variable="valorCompra"/>
+            <if expression="valorCompra &gt; 500">
+                <then>
+                    <assign variable="percentualDesconto" expression="20"/>
+                </then>
+                <else>
+                    <if expression="valorCompra &gt; 200">
+                        <then>
+                            <assign variable="percentualDesconto" expression="10"/>
+                        </then>
+                        <else>
+                            <if expression="valorCompra &gt; 100">
+                                <then>
+                                    <assign variable="percentualDesconto" expression="5"/>
+                                </then>
+                                <else>
+                                    <assign variable="percentualDesconto" expression="0"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+            <assign variable="valorDesconto" expression="valorCompra * percentualDesconto / 100"/>
+            <assign variable="valorFinal" expression="valorCompra - valorDesconto"/>
+            <output expression="&quot;Percentual de desconto (%):&quot;" newline="True"/>
+            <output expression="percentualDesconto" newline="True"/>
+            <output expression="&quot;Valor do desconto (R$):&quot;" newline="True"/>
+            <output expression="valorDesconto" newline="True"/>
+            <output expression="&quot;Valor final (R$):&quot;" newline="True"/>
+            <output expression="valorFinal" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

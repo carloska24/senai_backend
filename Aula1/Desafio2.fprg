@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="salario"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-01 05:07:30 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjA0OjIxOjM5ICI7MjU4OA=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMDE7IjA1OjA3OjMwICI7NjsyNjk3"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="salarioBruto" type="Real" array="False" size=""/>
+            <assign variable="salarioBruto" expression="0"/>
+            <declare name="valorHora" type="Real" array="False" size=""/>
+            <assign variable="valorHora" expression="0"/>
+            <declare name="horasTrabalhadas" type="Real" array="False" size=""/>
+            <assign variable="horasTrabalhadas" expression="0"/>
+            <declare name="totalSalario" type="Real" array="False" size=""/>
+            <assign variable="totalSalario" expression="0"/>
+            <declare name="imposto" type="Real" array="False" size=""/>
+            <assign variable="imposto" expression="0.11"/>
+            <declare name="inss" type="Real" array="False" size=""/>
+            <assign variable="inss" expression="0.08"/>
+            <declare name="sindicato" type="Real" array="False" size=""/>
+            <assign variable="sindicato" expression="0.05"/>
+            <output expression="&quot;Digite quanto voce ganha por hora?&quot;" newline="True"/>
+            <input variable="valorHora"/>
+            <output expression="&quot;Digite o numero de horas trabalhadas?&quot;" newline="True"/>
+            <input variable="horasTrabalhadas"/>
+            <assign variable="salarioBruto" expression="horasTrabalhadas * valorHora"/>
+            <assign variable="inss" expression="salarioBruto * inss"/>
+            <assign variable="imposto" expression="salarioBruto * imposto"/>
+            <assign variable="sindicato" expression="salarioBruto * sindicato"/>
+            <output expression="&quot;sal&#225;rio bruto = &quot; &amp; salarioBruto" newline="True"/>
+            <output expression="&quot;quanto pagou ao INSS? &quot; &amp; inss" newline="True"/>
+            <output expression="&quot;quanto pagou ao sindicato? &quot; &amp; sindicato" newline="True"/>
+            <output expression="&quot;o sal&#225;rio l&#237;quido &#233;: &quot; &amp; (salarioBruto - inss - sindicato)" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
