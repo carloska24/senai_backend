@@ -29,10 +29,10 @@ Curso Backend Senai/
 │   ├── 📄 Desafio.fprg & Desafio2.fprg           # Desafios de lógica propostos
 │   └── 📦 ExerciciosCompletos.zip                # Pacote compactado das soluções
 └── 📂 Aula2/                                     # Estruturas de Decisão & Lógica Booleana
-    ├── 📄 Atividades.md                          # Exercícios de avaliação de expressões lógicas (E, OU, NÃO)
     ├── 📂 Aula02 - Estutura de decisao/           # Exercícios de Decisão Simples (.fprg)
     ├── 📂 Aula02 - Estrutura de decisao composta/  # Exercícios de Decisão Composta (.fprg)
-    └── 📂 Aula02 - Estrutura de decisao Encadeada/ # Exercícios de Decisão Encadeada (.fprg e .html)
+    └── 📂 Aula02 - Estrutura de decisao Encadeada/ # Exercícios de Decisão Encadeada (.fprg, .html)
+        └── 🏆 Desafio_Emprestimo (.fprg & .html)  # Sistema de Aprovação de Empréstimo
 ```
 
 ---
@@ -48,7 +48,7 @@ Curso Backend Senai/
 ### 🔶 Aula 2: Estruturas de Decisão e Lógica Proposicional
 - **Estruturas de Decisão Simples e Compostas:** Aplicação de condicionais (`Se ... Então ... Senão`).
 - **Estruturas Encadeadas:** Resolução de problemas com múltiplas condições correlacionadas.
-- **Lógica Booleana (`Atividades.md`):** Avaliação prática de expressões com operadores lógicos (`E / &&`, `OU / ||`, `NÃO / !`).
+- **Desafio - Sistema de Aprovação de Empréstimo:** Algoritmo complexo com análises encadeadas de idade, renda mensal, score de crédito e limites dinâmicos (`Desafio_Emprestimo.fprg` e `Desafio_Emprestimo.html`).
 - **Implementação Web:** Conversão de algoritmos para **HTML5** e **JavaScript**.
 
 ---
