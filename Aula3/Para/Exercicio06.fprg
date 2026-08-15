@@ -3,39 +3,23 @@
     <attributes>
         <attribute name="name" value="Exercicio06"/>
         <attribute name="authors" value="Aluno"/>
-        <attribute name="about" value="Calcula o fatorial de um número com tratamento de erros."/>
+        <attribute name="about" value="Calcula o fatorial de um número sem validações extras (básico)."/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
         <body>
             <declare name="numero, i, fatorial" type="Integer" array="False" size=""/>
-            <declare name="valido" type="Boolean" array="False" size=""/>
-            <assign variable="valido" expression="False"/>
-            <while expression="!valido">
-                <output expression="&quot;Digite um número não negativo para calcular o fatorial:&quot;" newline="True"/>
-                <input variable="numero"/>
-                <if expression="numero &lt; 0">
-                    <then>
-                        <output expression="&quot;Número inválido. O fatorial não existe para números negativos.&quot;" newline="True"/>
-                    </then>
-                    <else>
-                        <assign variable="valido" expression="True"/>
-                    </else>
-                </if>
-            </while>
+            
+            <output expression="&quot;Digite um número para calcular o fatorial:&quot;" newline="True"/>
+            <input variable="numero"/>
             
             <assign variable="fatorial" expression="1"/>
-            <if expression="numero == 0">
-                <then>
-                    <output expression="&quot;0! = 1&quot;" newline="True"/>
-                </then>
-                <else>
-                    <for variable="i" start="1" end="numero" direction="inc" step="1">
-                        <assign variable="fatorial" expression="fatorial * i"/>
-                    </for>
-                    <output expression="numero &amp; &quot;! = &quot; &amp; fatorial" newline="True"/>
-                </else>
-            </if>
+            
+            <for variable="i" start="1" end="numero" direction="inc" step="1">
+                <assign variable="fatorial" expression="fatorial * i"/>
+            </for>
+            
+            <output expression="numero &amp; &quot;! = &quot; &amp; fatorial" newline="True"/>
         </body>
     </function>
 </flowgorithm>

@@ -183,8 +183,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>Exercício 06 - Calculadora de Fatorial</h1>
-            <p><strong>Enunciado:</strong> Peça um número e calcule o fatorial dele (ex: 5! = 120). Trate números negativos pedindo novamente, e lembre-se que 0! = 1.</p>
+            <h1>Exercício 06 - Calculadora de Fatorial Simples</h1>
+            <p><strong>Enunciado:</strong> Peça um número e calcule o fatorial dele (ex: 5! = 5 x 4 x 3 x 2 x 1 = 120).</p>
         </header>
 
         <div class="grid">
@@ -192,7 +192,7 @@
                 <h2>▶️ Executar Lógica</h2>
                 
                 <div class="input-group">
-                    <label for="numFatorial">Digite um número inteiro positivo:</label>
+                    <label for="numFatorial">Digite um número:</label>
                     <input type="number" id="numFatorial" placeholder="Ex: 5" required>
                 </div>
                 
@@ -206,14 +206,13 @@
             <div class="card">
                 <h2>📋 Passos Lógicos</h2>
                 <ul class="steps-list">
-                    <li>1. <strong>Validação:</strong> Se o número for negativo, mostrar erro e solicitar de novo (no JS faremos apenas o aviso).</li>
-                    <li>2. <strong>Caso Especial:</strong> Se o número for <code>0</code>, o fatorial é direto <code>1</code>.</li>
-                    <li>3. <strong>Loop PARA (For):</strong>
+                    <li>1. <strong>Declaração:</strong> Ler o número inserido.</li>
+                    <li>2. <strong>Loop PARA (For):</strong>
                         <br>&bull; Inicializa <code>fatorial = 1</code>
                         <br>&bull; Para <code>i</code> de <code>1</code> até <code>número</code>.
                         <br>&bull; Faz <code>fatorial = fatorial * i</code>.
                     </li>
-                    <li>4. <strong>Saída:</strong> Exibe toda a conta, ex: <code>5! = 5 x 4 x 3 x 2 x 1 = 120</code>.</li>
+                    <li>3. <strong>Saída:</strong> Exibe toda a conta, ex: <code>5! = 5 x 4 x 3 x 2 x 1 = 120</code>.</li>
                 </ul>
             </div>
         </div>
@@ -228,34 +227,22 @@
             const num = parseInt(inputFatorial.value);
             
             if (isNaN(num)) {
-                container.innerHTML = `<span style="color: var(--danger);">Por favor, insira um número válido.</span>`;
-                return;
-            }
-
-            // Tratamento exigido no desafio
-            if (num < 0) {
-                container.innerHTML = `<span style="color: var(--danger);">❌ Número negativo (não existe fatorial). Por favor, insira um número não negativo (0 ou positivo).</span>`;
-                inputFatorial.value = "";
-                inputFatorial.focus();
-                return;
-            }
-
-            if (num === 0) {
-                container.innerHTML = `<span style="color: var(--success);">0! = 1</span>`;
+                container.innerHTML = `<span style="color: var(--danger);">Por favor, insira um número.</span>`;
                 return;
             }
 
             let fatorial = 1;
             let expressao = `${num}! = `;
             
-            // Lógica do Fatorial
-            // O enunciado mostra descrescente: 5 x 4 x 3 x 2 x 1, então faremos assim para ficar igual ao exemplo.
-            for(let i = num; i >= 1; i--) {
-                fatorial *= i;
-                expressao += i + (i > 1 ? " &times; " : " = ");
+            if (num <= 1) {
+                expressao += `1 = 1`;
+            } else {
+                for(let i = num; i >= 1; i--) {
+                    fatorial *= i;
+                    expressao += i + (i > 1 ? " &times; " : " = ");
+                }
+                expressao += `<strong>${fatorial}</strong>`;
             }
-            
-            expressao += `<strong>${fatorial}</strong>`;
             
             container.innerHTML = `<span style="color: var(--primary); font-size: 1.1rem;">${expressao}</span>`;
         });
