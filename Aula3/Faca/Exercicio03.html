@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 03 - Flowgorithm: Acumulador com Confirmação (FAÇA)</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --flow-shape-bg: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(34, 197, 94, 0.08) 0px, transparent 55%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: min(100%, 980px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        header {
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 820px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        input[type="number"], select {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            padding: 0.85rem 1rem;
+            border-radius: 0.65rem;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #0f172a;
+            font-weight: 700;
+            border: none;
+            padding: 0.95rem 1.5rem;
+            border-radius: 0.65rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.1s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.25);
+        }
+
+        .output-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 0.85rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px dashed var(--border-color);
+        }
+
+        .total-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-top: 0.5rem;
+        }
+
+        .flow-node {
+            background: var(--flow-shape-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.65rem;
+            padding: 0.85rem;
+            text-align: center;
+            margin: 0.85rem 0;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+
+        .flow-node.oval {
+            border-radius: 2rem;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--primary);
+        }
+
+        .flow-node.rhombus {
+            border-radius: 0.25rem;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+        }
+
+        .flow-node.io {
+            transform: skewX(-8deg);
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .steps-list li {
+            background: rgba(15, 23, 42, 0.55);
+            padding: 0.95rem 1rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary);
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .steps-list code {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 0.15rem 0.35rem;
+            border-radius: 0.3rem;
+            color: #38bdf8;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Exercício 03 - Acumulador de Valores com Confirmação (Estrutura FAÇA)</h1>
+            <p><strong>Enunciado:</strong> Peça um número e informe o valor total acumulado. Some esse número ao total e pergunte se deseja continuar (S/N) utilizando o laço FAÇA.</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h2>🧮 Somador Interativo (FAÇA)</h2>
+                <form id="sumForm">
+                    <div class="input-group">
+                        <label for="numInput">Número a somar:</label>
+                        <input type="number" id="numInput" step="any" placeholder="Ex: 15.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="continueSelect">Deseja continuar somando depois deste número?</label>
+                        <select id="continueSelect">
+                            <option value="S">Sim (S)</option>
+                            <option value="N">Não (N - Encerrar)</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="btnAction">Somar ao Total</button>
+                    <button type="button" onclick="resetAll()" style="margin-top: 0.5rem; background: rgba(255,255,255,0.1); color: #fff;">Zerar Acumulador</button>
+                </form>
+
+                <div class="output-box">
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">VALOR TOTAL ACUMULADO:</div>
+                    <div class="total-display" id="totalDisplay">0.00</div>
+                    <div id="statusInfo" style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">No laço FAÇA, a primeira execução é garantida (Total inicial: 0).</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📋 Passos no Flowgorithm</h2>
+                <ul class="steps-list">
+                    <li>1. <strong>Declaração:</strong> Criar variáveis <code>numeroInserido</code>, <code>totalAcumulado</code> (Real) e <code>desejaContinuar</code> (Texto).</li>
+                    <li>2. <strong>Atribuição Inicial:</strong> <code>totalAcumulado = 0</code>.</li>
+                    <li>3. <strong>Estrutura FAÇA (Do):</strong>
+                        <br>&bull; <strong>Saída:</strong> Exibir <code>totalAcumulado</code>
+                        <br>&bull; <strong>Entrada:</strong> Ler <code>numeroInserido</code>
+                        <br>&bull; <strong>Cálculo:</strong> <code>totalAcumulado = totalAcumulado + numeroInserido</code>
+                        <br>&bull; <strong>Entrada:</strong> Ler <code>desejaContinuar</code> ("S" ou "N")
+                    </li>
+                    <li>4. <strong>Condição no Final (While):</strong>
+                        <br>&bull; Repetir ENQUANTO <code>desejaContinuar == "S" || desejaContinuar == "s"</code>
+                    </li>
+                    <li>5. <strong>Saída Final:</strong> Exibir total acumulado final.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📐 Fluxograma (Representação Visual - Bloco Faça)</h2>
+            <div style="max-width: 500px; margin: 0 auto;">
+                <div class="flow-node oval">Início</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node">totalAcumulado = 0</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node io">Corpo do Bloco FAÇA (Entrada e Soma)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node rhombus">desejaContinuar == "S" ? (Teste no Fim)</div>
+                <div style="display: flex; justify-content: space-around; margin: 1rem 0; gap: 1rem;">
+                    <div style="flex: 1; text-align: center; padding: 0.5rem; border-left: 3px solid var(--success);">
+                        <span style="color: var(--success); font-weight: bold;">[SIM (Repete Loop)]</span>
+                    </div>
+                    <div style="flex: 1; text-align: center; padding: 0.5rem; border-left: 3px solid var(--danger);">
+                        <span style="color: var(--danger); font-weight: bold;">[NÃO (Encerra)]</span>
+                        <div class="flow-node io" style="margin-top: 0.5rem; font-size: 0.8rem;">Saída total final</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node oval" style="margin-top: 0.5rem;">Fim</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let total = 0;
+        let isStopped = false;
+
+        const form = document.getElementById('sumForm');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const statusInfo = document.getElementById('statusInfo');
+        const numInput = document.getElementById('numInput');
+        const continueSelect = document.getElementById('continueSelect');
+        const btnAction = document.getElementById('btnAction');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (isStopped) {
+                alert('O processo já foi encerrado. Clique em "Zerar Acumulador" para recomeçar.');
+                return;
+            }
+
+            const num = parseFloat(numInput.value);
+            total += num;
+
+            totalDisplay.innerText = total.toFixed(2);
+            numInput.value = '';
+
+            if (continueSelect.value === 'N') {
+                isStopped = true;
+                statusInfo.innerHTML = `<span style="color: var(--danger); font-weight: bold;">⛔ Processo Encerrado (Opção N). Total final: ${total.toFixed(2)}</span>`;
+                btnAction.disabled = true;
+            } else {
+                statusInfo.innerText = `Número ${num} somado. Total atualizado para ${total.toFixed(2)}.`;
+            }
+        });
+
+        function resetAll() {
+            total = 0;
+            isStopped = false;
+            totalDisplay.innerText = '0.00';
+            statusInfo.innerText = 'Processo reiniciado. Valor total inicial é 0.';
+            btnAction.disabled = false;
+            numInput.value = '';
+        }
+    </script>
+</body>
+</html>

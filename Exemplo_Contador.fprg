@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exemplo_Contador"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-08-15 09:50:05 "/>
+        <attribute name="created" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMTU7IjA5OjM2OjQzICI7MjU5OQ=="/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMTU7IjA5OjUwOjA1ICI7MTsyNzAx"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="cont" type="Integer" array="False" size=""/>
+            <assign variable="cont" expression="1"/>
+            <while expression="cont &lt;= 5">
+                <output expression="&quot;Numero&quot; &amp; cont" newline="True"/>
+                <assign variable="cont" expression="cont+1"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

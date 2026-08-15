@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio03"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Acumulador de valores com confirmação (S/N) utilizando a estrutura FAÇA."/>
+        <attribute name="saved" value="2026-08-15 13:47:00 "/>
+        <attribute name="created" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="2026-08-15 13:47:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeroInserido" type="Real" array="False" size=""/>
+            <declare name="totalAcumulado" type="Real" array="False" size=""/>
+            <declare name="desejaContinuar" type="String" array="False" size=""/>
+            <assign variable="totalAcumulado" expression="0"/>
+            <do expression="desejaContinuar == &quot;S&quot; || desejaContinuar == &quot;s&quot;">
+                <output expression="&quot;Valor total acumulado até o momento:&quot;" newline="True"/>
+                <output expression="totalAcumulado" newline="True"/>
+                <output expression="&quot;Digite um número para somar ao total:&quot;" newline="True"/>
+                <input variable="numeroInserido"/>
+                <assign variable="totalAcumulado" expression="totalAcumulado + numeroInserido"/>
+                <output expression="&quot;Deseja continuar somando? (S/N):&quot;" newline="True"/>
+                <input variable="desejaContinuar"/>
+            </do>
+            <output expression="&quot;Processo finalizado. Valor total acumulado final:&quot;" newline="True"/>
+            <output expression="totalAcumulado" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

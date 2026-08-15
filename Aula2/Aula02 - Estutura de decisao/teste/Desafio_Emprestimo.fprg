@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Desafio_Emprestimo"/>
+        <attribute name="authors" value="Carlos Pereira"/>
+        <attribute name="about" value="Sistema de Aprovação de Empréstimo"/>
+        <attribute name="saved" value="2026-08-08 05:00:00 PM"/>
+        <attribute name="created" value="2026-08-08 05:00:00 PM"/>
+        <attribute name="edited" value="2026-08-08 05:00:00 PM"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="idade" type="Integer" array="False" size=""/>
+            <declare name="salario" type="Real" array="False" size=""/>
+            <declare name="score" type="Integer" array="False" size=""/>
+            <declare name="valorSolicitado" type="Real" array="False" size=""/>
+            <declare name="limiteSalario" type="Real" array="False" size=""/>
+            <declare name="limiteScore" type="Real" array="False" size=""/>
+            <declare name="limiteFinal" type="Real" array="False" size=""/>
+            
+            <output expression="&quot;Digite a sua idade:&quot;" newline="True"/>
+            <input variable="idade"/>
+            
+            <if expression="idade &lt; 18">
+                <then>
+                    <output expression="&quot;Empréstimo negado: menor de idade.&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;Digite o seu salário mensal (R$):&quot;" newline="True"/>
+                    <input variable="salario"/>
+                    
+                    <if expression="salario &lt; 1500">
+                        <then>
+                            <output expression="&quot;Empréstimo negado: salário insuficiente.&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;Digite o seu score de crédito (0 a 1000):&quot;" newline="True"/>
+                            <input variable="score"/>
+                            
+                            <if expression="score &lt; 400">
+                                <then>
+                                    <output expression="&quot;Empréstimo negado: score insuficiente.&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <output expression="&quot;Digite o valor do empréstimo solicitado (R$):&quot;" newline="True"/>
+                                    <input variable="valorSolicitado"/>
+                                    
+                                    <!-- Definir limite pelo salário -->
+                                    <if expression="salario &lt;= 3000">
+                                        <then>
+                                            <assign variable="limiteSalario" expression="5000"/>
+                                        </then>
+                                        <else>
+                                            <assign variable="limiteSalario" expression="15000"/>
+                                        </else>
+                                    </if>
+                                    
+                                    <!-- Definir limite pelo score -->
+                                    <if expression="score &lt;= 699">
+                                        <then>
+                                            <assign variable="limiteScore" expression="5000"/>
+                                        </then>
+                                        <else>
+                                            <assign variable="limiteScore" expression="15000"/>
+                                        </else>
+                                    </if>
+                                    
+                                    <!-- Definir limite final como o menor limite entre renda e score -->
+                                    <if expression="limiteSalario &lt; limiteScore">
+                                        <then>
+                                            <assign variable="limiteFinal" expression="limiteSalario"/>
+                                        </then>
+                                        <else>
+                                            <assign variable="limiteFinal" expression="limiteScore"/>
+                                        </else>
+                                    </if>
+                                    
+                                    <!-- Verificar se valor solicitado está dentro do limite -->
+                                    <if expression="valorSolicitado &gt; limiteFinal">
+                                        <then>
+                                            <output expression="&quot;Empréstimo negado: valor solicitado acima do limite.&quot;" newline="True"/>
+                                        </then>
+                                        <else>
+                                            <output expression="&quot;Empréstimo aprovado!&quot;" newline="True"/>
+                                        </else>
+                                    </if>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

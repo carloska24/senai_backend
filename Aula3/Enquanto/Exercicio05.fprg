@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio05"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="L&#234; um n&#250;mero inteiro e realiza contagem regressiva at&#233; 0 com ENQUANTO."/>
+        <attribute name="saved" value="2026-08-15 11:20:37 "/>
+        <attribute name="created" value="2026-08-15 11:17:00 "/>
+        <attribute name="edited" value="2026-08-15 11:17:00 "/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMTU7IjExOjIwOjM3ICI7MTsyNjk2"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeroInicial" type="Integer" array="False" size=""/>
+            <declare name="contador" type="Integer" array="False" size=""/>
+            <output expression="&quot;Digite um n&#250;mero inteiro para iniciar a contagem regressiva:&quot;" newline="True"/>
+            <input variable="numeroInicial"/>
+            <assign variable="contador" expression="numeroInicial"/>
+            <while expression="contador &gt;= 0">
+                <output expression="contador" newline="True"/>
+                <assign variable="contador" expression="contador - 1"/>
+            </while>
+            <output expression="&quot;Contagem regressiva finalizada!&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

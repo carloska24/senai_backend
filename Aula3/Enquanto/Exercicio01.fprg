@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio01"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Validação de senha de acesso utilizando a estrutura ENQUANTO."/>
+        <attribute name="saved" value="2026-08-15 12:25:00 "/>
+        <attribute name="created" value="2026-08-15 12:25:00 "/>
+        <attribute name="edited" value="2026-08-15 12:25:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="senhaInformada" type="Integer" array="False" size=""/>
+            <output expression="&quot;Digite a senha de acesso:&quot;" newline="True"/>
+            <input variable="senhaInformada"/>
+            <while expression="senhaInformada != 1234">
+                <output expression="&quot;Senha incorreta! Tente novamente:&quot;" newline="True"/>
+                <input variable="senhaInformada"/>
+            </while>
+            <output expression="&quot;Acesso concedido! Senha correta.&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

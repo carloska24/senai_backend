@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio03"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Mostra todos os números pares de 0 até 20 (sem usar módulo)."/>
+        <attribute name="saved" value="2026-08-15 12:25:00 "/>
+        <attribute name="created" value="2026-08-15 12:25:00 "/>
+        <attribute name="edited" value="2026-08-15 12:25:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="20" direction="inc" step="2">
+                <output expression="i" newline="True"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

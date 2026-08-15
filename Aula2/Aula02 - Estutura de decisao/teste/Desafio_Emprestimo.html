@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio - Sistema de Aprovação de Empréstimo</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.75);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border: none;
+            border-radius: 0.5rem;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            opacity: 0.95;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px dashed var(--border-color);
+        }
+
+        .result-status {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-aprovado {
+            color: var(--success);
+        }
+
+        .status-negado {
+            color: var(--danger);
+        }
+
+        .result-detail {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .rules-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .rules-list li {
+            padding-left: 1.2rem;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .rules-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 Sistema de Aprovação de Empréstimo</h1>
+            <p>Análise de crédito automatizada utilizando decisões compostas e encadeadas.</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h2>📝 Dados do Solicitante</h2>
+                <form id="loanForm" onsubmit="analisarEmprestimo(event)">
+                    <div class="form-group">
+                        <label for="idade">Idade (anos):</label>
+                        <input type="number" id="idade" placeholder="Ex: 25" required min="0" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salario">Salário Mensal (R$):</label>
+                        <input type="number" id="salario" step="0.01" placeholder="Ex: 2500.00" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="score">Score de Crédito (0 a 1000):</label>
+                        <input type="number" id="score" placeholder="Ex: 650" required min="0" max="1000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valor">Valor do Empréstimo Solicitado (R$):</label>
+                        <input type="number" id="valor" step="0.01" placeholder="Ex: 4000.00" required min="0">
+                    </div>
+
+                    <button type="submit">Analisar Empréstimo</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>📊 Resultado da Análise</h2>
+                <div id="resultBox" class="result-box">
+                    <p style="color: var(--text-muted);">Preencha o formulário e clique em <b>Analisar Empréstimo</b>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📋 Regras de Análise</h2>
+            <ul class="rules-list">
+                <li><b>Idade:</b> Idade mínima de 18 anos (caso contrário: <i>Empréstimo negado: menor de idade.</i>)</li>
+                <li><b>Salário:</b> Menor que R$ 1.500,00 ➔ <i>Empréstimo negado: salário insuficiente.</i></li>
+                <li><b>Salário de R$ 1.500,00 a R$ 3.000,00:</b> Permite solicitar até R$ 5.000,00.</li>
+                <li><b>Salário acima de R$ 3.000,00:</b> Permite solicitar até R$ 15.000,00.</li>
+                <li><b>Score:</b> Menor que 400 ➔ <i>Empréstimo negado: score insuficiente.</i></li>
+                <li><b>Score de 400 a 699:</b> Análise somente para valores de até R$ 5.000,00.</li>
+                <li><b>Score ≥ 700:</b> Sem limitação adicional de score.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function analisarEmprestimo(event) {
+            event.preventDefault();
+
+            const idade = parseInt(document.getElementById('idade').value);
+            const salario = parseFloat(document.getElementById('salario').value);
+            const score = parseInt(document.getElementById('score').value);
+            const valorSolicitado = parseFloat(document.getElementById('valor').value);
+
+            // 1. Verificação da idade (mínimo 18 anos)
+            if (idade < 18) {
+                exibirResultado(false, "Empréstimo negado: menor de idade.", "É necessário ter no mínimo 18 anos completos para obter crédito.");
+                return;
+            }
+
+            // 2. Verificação do salário (mínimo R$ 1.500,00)
+            if (salario < 1500) {
+                exibirResultado(false, "Empréstimo negado: salário insuficiente.", "Renda mensal mínima exigida para aprovação é de R$ 1.500,00.");
+                return;
+            }
+
+            // 3. Verificação do score (mínimo 400)
+            if (score < 400) {
+                exibirResultado(false, "Empréstimo negado: score insuficiente.", "Pontuação de score de crédito abaixo do mínimo exigido (400).");
+                return;
+            }
+
+            // 4. Definição dos limites por salário e por score
+            let limiteSalario = (salario <= 3000) ? 5000 : 15000;
+            let limiteScore = (score <= 699) ? 5000 : 15000;
+            let limiteFinal = Math.min(limiteSalario, limiteScore);
+
+            // 5. Comparação do valor solicitado com o limite aprovado
+            if (valorSolicitado > limiteFinal) {
+                exibirResultado(
+                    false, 
+                    "Empréstimo negado: valor solicitado acima do limite.", 
+                    `Valor solicitado (R$ ${valorSolicitado.toLocaleString('pt-BR', {minimumFractionDigits: 2})}) ultrapassa o limite aprovado de R$ ${limiteFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}.`
+                );
+            } else {
+                exibirResultado(
+                    true, 
+                    "Empréstimo aprovado!", 
+                    `Parabéns! Seu empréstimo no valor de R$ ${valorSolicitado.toLocaleString('pt-BR', {minimumFractionDigits: 2})} foi aprovado com sucesso! (Limite disponível: R$ ${limiteFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})})`
+                );
+            }
+        }
+
+        function exibirResultado(aprovado, titulo, detalhe) {
+            const resultBox = document.getElementById('resultBox');
+            const classe = aprovado ? 'status-aprovado' : 'status-negado';
+            const icone = aprovado ? '✅' : '❌';
+
+            resultBox.innerHTML = `
+                <div class="result-status ${classe}">${icone} ${titulo}</div>
+                <div class="result-detail">${detalhe}</div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio02"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Mostra os números de 100 até 1."/>
+        <attribute name="saved" value="2026-08-15 12:25:00 "/>
+        <attribute name="created" value="2026-08-15 12:25:00 "/>
+        <attribute name="edited" value="2026-08-15 12:25:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="100" end="1" direction="dec" step="1">
+                <output expression="i" newline="True"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

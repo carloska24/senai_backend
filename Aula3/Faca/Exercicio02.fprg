@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio02"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Valida&#231;&#227;o de n&#250;mero positivo utilizando a estrutura FA&#199;A."/>
+        <attribute name="saved" value="2026-08-15 02:04:53 "/>
+        <attribute name="created" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMTU7IjAyOjA0OjUzICI7MTsyNjk2"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeroInformado" type="Real" array="False" size=""/>
+            <do expression="numeroInformado &lt; 0">
+                <output expression="&quot;Digite um n&#250;mero positivo:&quot;" newline="True"/>
+                <input variable="numeroInformado"/>
+                <if expression="numeroInformado &lt;= 0">
+                    <then>
+                        <output expression="&quot; O numero informado &#233; negativo  &quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+            <output expression="&quot;N&#250;mero positivo aceito com sucesso:&quot;" newline="True"/>
+            <output expression="numeroInformado" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

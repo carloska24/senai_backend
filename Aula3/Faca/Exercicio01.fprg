@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio01"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Valida&#231;&#227;o de senha de acesso utilizando a estrutura FA&#199;A."/>
+        <attribute name="saved" value="2026-08-15 02:05:34 "/>
+        <attribute name="created" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="QWx1bm87RUNGUDUxMk4xMjQyOTg2OzIwMjYtMDgtMTU7IjAyOjA1OjM0ICI7MTsyNjk2"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="senhaInformada" type="Integer" array="False" size=""/>
+            <do expression="senhaInformada != 1234">
+                <output expression="&quot;Digite a senha de acesso:&quot;" newline="True"/>
+                <input variable="senhaInformada"/>
+                <if expression="senhaInformada != 1234">
+                    <then>
+                        <output expression="&quot; Senha incorreta! &quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+            <output expression="&quot;Acesso concedido! Senha correta.&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

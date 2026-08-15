@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio04"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Validação de nota entre 0 e 10 utilizando a estrutura FAÇA."/>
+        <attribute name="saved" value="2026-08-15 13:47:00 "/>
+        <attribute name="created" value="2026-08-15 13:47:00 "/>
+        <attribute name="edited" value="2026-08-15 13:47:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="notaAluno" type="Real" array="False" size=""/>
+            <do expression="notaAluno &lt; 0 || notaAluno &gt; 10">
+                <output expression="&quot;Digite uma nota entre 0 e 10:&quot;" newline="True"/>
+                <input variable="notaAluno"/>
+            </do>
+            <output expression="&quot;Nota válida registrada com sucesso:&quot;" newline="True"/>
+            <output expression="notaAluno" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
