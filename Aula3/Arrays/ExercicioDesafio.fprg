@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="ExercicioDesafio"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Preenche um vetor com 10 inteiros, exibe na ordem original e realiza a ordenacao crescente."/>
+        <attribute name="saved" value="2026-08-21 23:12:00 "/>
+        <attribute name="created" value="2026-08-21 23:12:00 "/>
+        <attribute name="edited" value="2026-08-21 23:12:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeros" type="Integer" array="True" size="10"/>
+            <declare name="auxiliar" type="Integer" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <declare name="j" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="9" direction="inc" step="1">
+                <output expression="&quot;Digite o numero para a posicao &quot; &amp; (i + 1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="numeros[i]"/>
+            </for>
+            <output expression="&quot;Vetor na ordem original:&quot;" newline="True"/>
+            <for variable="i" start="0" end="9" direction="inc" step="1">
+                <output expression="numeros[i]" newline="True"/>
+            </for>
+            <for variable="i" start="0" end="8" direction="inc" step="1">
+                <for variable="j" start="i + 1" end="9" direction="inc" step="1">
+                    <if expression="numeros[i] &gt; numeros[j]">
+                        <then>
+                            <assign variable="auxiliar" expression="numeros[i]"/>
+                            <assign variable="numeros[i]" expression="numeros[j]"/>
+                            <assign variable="numeros[j]" expression="auxiliar"/>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+            </for>
+            <output expression="&quot;Vetor ordenado em ordem crescente:&quot;" newline="True"/>
+            <for variable="i" start="0" end="9" direction="inc" step="1">
+                <output expression="numeros[i]" newline="True"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

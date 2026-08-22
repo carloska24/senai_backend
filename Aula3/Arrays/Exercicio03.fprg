@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio03"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Armazena as notas de 5 alunos em um vetor, calcula a media das notas e exibe o resultado."/>
+        <attribute name="saved" value="2026-08-21 23:12:00 "/>
+        <attribute name="created" value="2026-08-21 23:12:00 "/>
+        <attribute name="edited" value="2026-08-21 23:12:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="notas" type="Real" array="True" size="5"/>
+            <declare name="somaNotas" type="Real" array="False" size=""/>
+            <declare name="mediaFinal" type="Real" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <assign variable="somaNotas" expression="0"/>
+            <for variable="i" start="0" end="4" direction="inc" step="1">
+                <output expression="&quot;Digite a nota do aluno &quot; &amp; (i + 1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="notas[i]"/>
+                <assign variable="somaNotas" expression="somaNotas + notas[i]"/>
+            </for>
+            <assign variable="mediaFinal" expression="somaNotas / 5"/>
+            <output expression="&quot;Media final da turma:&quot;" newline="True"/>
+            <output expression="mediaFinal" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

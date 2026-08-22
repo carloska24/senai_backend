@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio04"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Leitura de 10 inteiros em um vetor e identificacao do maior e menor valor."/>
+        <attribute name="saved" value="2026-08-21 23:12:00 "/>
+        <attribute name="created" value="2026-08-21 23:12:00 "/>
+        <attribute name="edited" value="2026-08-21 23:12:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeros" type="Integer" array="True" size="10"/>
+            <declare name="maiorValor" type="Integer" array="False" size=""/>
+            <declare name="menorValor" type="Integer" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="9" direction="inc" step="1">
+                <output expression="&quot;Digite o numero para a posicao &quot; &amp; (i + 1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="numeros[i]"/>
+            </for>
+            <assign variable="maiorValor" expression="numeros[0]"/>
+            <assign variable="menorValor" expression="numeros[0]"/>
+            <for variable="i" start="1" end="9" direction="inc" step="1">
+                <if expression="numeros[i] &gt; maiorValor">
+                    <then>
+                        <assign variable="maiorValor" expression="numeros[i]"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="numeros[i] &lt; menorValor">
+                    <then>
+                        <assign variable="menorValor" expression="numeros[i]"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+            <output expression="&quot;Maior valor encontrado:&quot;" newline="True"/>
+            <output expression="maiorValor" newline="True"/>
+            <output expression="&quot;Menor valor encontrado:&quot;" newline="True"/>
+            <output expression="menorValor" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio02"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Armazena 8 numeros inteiros em um vetor e calcula a soma de todos os elementos."/>
+        <attribute name="saved" value="2026-08-21 23:12:00 "/>
+        <attribute name="created" value="2026-08-21 23:12:00 "/>
+        <attribute name="edited" value="2026-08-21 23:12:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeros" type="Integer" array="True" size="8"/>
+            <declare name="somaTotal" type="Integer" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <assign variable="somaTotal" expression="0"/>
+            <for variable="i" start="0" end="7" direction="inc" step="1">
+                <output expression="&quot;Digite o numero &quot; &amp; (i + 1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="numeros[i]"/>
+                <assign variable="somaTotal" expression="somaTotal + numeros[i]"/>
+            </for>
+            <output expression="&quot;Soma total dos 8 elementos:&quot;" newline="True"/>
+            <output expression="somaTotal" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
