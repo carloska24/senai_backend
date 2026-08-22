@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio004"/>
+        <attribute name="authors" value="Carlos Pereira"/>
+        <attribute name="about" value="Exercicio 04 - Vetores: Leitura de 10 inteiros e calculo do maior e menor valor utilizando estritamente 2 lacos PARA, sem nenhum bloco IF/ELSE."/>
+        <attribute name="saved" value="2026-08-22 11:40:00 "/>
+        <attribute name="created" value="2026-08-22 11:40:00 "/>
+        <attribute name="edited" value="2026-08-22 11:40:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="vetor" type="Integer" array="True" size="10"/>
+            <declare name="maior" type="Integer" array="False" size=""/>
+            <declare name="menor" type="Integer" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="9" direction="inc" step="1">
+                <output expression="&quot;Digite o numero da posicao &quot; &amp; (i + 1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="vetor[i]"/>
+            </for>
+            <assign variable="maior" expression="vetor[0]"/>
+            <assign variable="menor" expression="vetor[0]"/>
+            <for variable="i" start="1" end="9" direction="inc" step="1">
+                <assign variable="maior" expression="(maior + vetor[i] + Abs(maior - vetor[i])) / 2"/>
+                <assign variable="menor" expression="(menor + vetor[i] - Abs(menor - vetor[i])) / 2"/>
+            </for>
+            <output expression="&quot;Maior valor: &quot; &amp; maior" newline="True"/>
+            <output expression="&quot;Menor valor: &quot; &amp; menor" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

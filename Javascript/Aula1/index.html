@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SENAI Backend JS • Exercícios Aula 01</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Folha de Estilos -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Barra de Navegação Superior -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">JS</div>
+      <div class="brand-info">
+        <h1>SENAI • Curso Backend</h1>
+        <span>Aula 01 — Estruturas Sequenciais</span>
+      </div>
+    </div>
+    <div class="badge-tag">
+      <span>●</span> 10 Exercícios Prontos
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <main class="app-container">
+    
+    <!-- Barra Lateral com Lista de Exercícios -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Exercícios da Aula</div>
+      <nav id="exerciseNav" class="exercise-nav">
+        <!-- Itens inseridos dinamicamente pelo JavaScript -->
+      </nav>
+    </aside>
+
+    <!-- Área de Conteúdo / Exercício Ativo -->
+    <section class="content-area">
+      <div class="exercise-card">
+        
+        <!-- Cabeçalho do Exercício -->
+        <div class="exercise-header">
+          <div class="exercise-meta">
+            <span id="exBadge" class="exercise-badge">Exercício 01</span>
+          </div>
+          <h2 id="exTitle" class="exercise-title">Título do Exercício</h2>
+          <p id="exDesc" class="exercise-desc">Descrição do exercício.</p>
+        </div>
+
+        <!-- Formulário Dinâmico de Inputs -->
+        <div id="formGrid" class="form-grid">
+          <!-- Inputs inseridos dinamicamente -->
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="executeCurrentExercise()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Executar Programa
+          </button>
+          <button class="btn btn-secondary" onclick="clearCurrentInputs()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            Limpar Campos
+          </button>
+        </div>
+
+        <!-- Caixa de Resultado -->
+        <div id="resultBox" class="result-box">
+          <div class="result-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Resultado da Execução:
+          </div>
+          <div id="resultContent" class="result-content">
+            <!-- Saída dinâmica -->
+          </div>
+          <div id="resultDetails" class="result-details">
+            <!-- Badges e detalhes adicionais -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Seção Expansível para Ver o Código JS (Node.js) -->
+      <div id="codeSection" class="code-section">
+        <div id="codeHeader" class="code-header">
+          <div class="code-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span>Ver Código JavaScript correspondente (Node.js / Terminal)</span>
+          </div>
+          <svg class="code-toggle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="code-body">
+          <div class="code-wrapper">
+            <button id="copyBtn" class="copy-btn" onclick="copyCode()">Copiar Código</button>
+            <pre><code id="codeSnippet">// Código JS</code></pre>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    SENAI • Desenvolvimento Backend JavaScript • Ambiente Interativo de Exercícios
+  </footer>
+
+  <!-- Script da Aplicação -->
+  <script src="app.js"></script>
+</body>
+</html>

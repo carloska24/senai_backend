@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Exercicio02"/>
+        <attribute name="authors" value="Aluno"/>
+        <attribute name="about" value="Validação de número positivo utilizando a estrutura ENQUANTO."/>
+        <attribute name="saved" value="2026-08-22 13:30:00 "/>
+        <attribute name="created" value="2026-08-22 13:30:00 "/>
+        <attribute name="edited" value="2026-08-22 13:30:00 "/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="numeroInformado" type="Real" array="False" size=""/>
+            <output expression="&quot;Digite um número positivo:&quot;" newline="True"/>
+            <input variable="numeroInformado"/>
+            <while expression="numeroInformado &lt; 0">
+                <output expression="&quot;Número inválido! O número digitado é negativo. Digite um número positivo:&quot;" newline="True"/>
+                <input variable="numeroInformado"/>
+            </while>
+            <output expression="&quot;Número positivo aceito com sucesso:&quot;" newline="True"/>
+            <output expression="numeroInformado" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
