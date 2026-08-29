@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entendendo Arrays & Loops - Exercício 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #111827;
+            --bg-card-hover: #1F2937;
+            --border-color: #374151;
+            --primary: #6366F1;
+            --primary-glow: rgba(99, 102, 241, 0.25);
+            --accent-green: #10B981;
+            --accent-green-glow: rgba(16, 185, 129, 0.25);
+            --accent-amber: #F59E0B;
+            --accent-amber-glow: rgba(245, 158, 11, 0.25);
+            --accent-cyan: #06B6D4;
+            --text-main: #F9FAFB;
+            --text-muted: #9CA3AF;
+            --code-bg: #030712;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 9999px;
+            color: #A5B4FC;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF 0%, #A5B4FC 50%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Metaphor Card */
+        .metaphor-section {
+            background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .metaphor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .metaphor-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .metaphor-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .metaphor-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metaphor-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: #E0E7FF;
+        }
+
+        .metaphor-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Simulator */
+        .simulator-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        button.btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 0.625rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        button.btn:hover {
+            background: #4F46E5;
+            transform: translateY(-1px);
+        }
+
+        button.btn-secondary {
+            background: #374151;
+            box-shadow: none;
+        }
+
+        button.btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .sim-status {
+            margin-left: auto;
+            color: #38BDF8;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Code Viewer */
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .code-line.active {
+            background: rgba(99, 102, 241, 0.3);
+            border-left: 3px solid var(--primary);
+            color: #FFF;
+            font-weight: 600;
+        }
+
+        .line-num {
+            color: #4B5563;
+            user-select: none;
+            width: 1.5rem;
+            text-align: right;
+        }
+
+        /* Memory Display */
+        .memory-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .var-card {
+            background: #1F2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .var-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #9CA3AF;
+        }
+
+        .var-val {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.25rem;
+            color: #FBBF24;
+            font-weight: 700;
+        }
+
+        /* Array Slots Graphic */
+        .array-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            min-height: 4.5rem;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .array-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #374151;
+            border: 2px solid #4B5563;
+            border-radius: 0.5rem;
+            min-width: 42px;
+            padding: 0.35rem;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .array-slot.highlight {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 12px var(--accent-green-glow);
+        }
+
+        .array-slot.reverse-highlight {
+            border-color: var(--accent-amber);
+            background: rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 12px var(--accent-amber-glow);
+        }
+
+        .slot-val {
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #FFF;
+        }
+
+        .slot-index {
+            font-size: 0.7rem;
+            color: #9CA3AF;
+            margin-top: 0.2rem;
+            border-top: 1px dashed #4B5563;
+            width: 100%;
+            text-align: center;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Console Window */
+        .console-box {
+            background: #000;
+            border: 1px solid #1F2937;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            height: 140px;
+            overflow-y: auto;
+            color: #4ADE80;
+        }
+
+        .console-prompt {
+            color: #60A5FA;
+        }
+
+        /* Step by Step Breakdown Cards */
+        .breakdown-section {
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--primary);
+        }
+
+        .step-card.green::before { background: var(--accent-green); }
+        .step-card.amber::before { background: var(--accent-amber); }
+        .step-card.cyan::before { background: var(--accent-cyan); }
+
+        .step-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .step-card.green .step-tag { color: var(--accent-green); }
+        .step-card.amber .step-tag { color: var(--accent-amber); }
+        .step-card.cyan .step-tag { color: var(--accent-cyan); }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #FFF;
+        }
+
+        .step-code-inline {
+            background: var(--code-bg);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #E2E8F0;
+            margin: 0.75rem 0;
+            border-left: 3px solid #6366F1;
+        }
+
+        .highlight-keyword { color: #F43F5E; }
+        .highlight-fn { color: #38BDF8; }
+        .highlight-str { color: #A3E635; }
+        .highlight-num { color: #FBBF24; }
+        .highlight-comment { color: #6B7280; font-style: italic; }
+
+        .q-and-a {
+            background: rgba(255,255,255,0.03);
+            border-radius: 0.625rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px dashed rgba(255,255,255,0.15);
+        }
+
+        .q-and-a strong {
+            color: #FBBF24;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+        }
+
+        .faq-item h4 {
+            color: #E0E7FF;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="badge">🚀 Curso Backend Senai • Aula 3</div>
+            <h1>Guia Visual e Interativo: Exercício 01</h1>
+            <p class="subtitle">Aprenda de forma simples e intuitiva como funcionam <strong>Arrays</strong>, <strong>.push()</strong> e <strong>Loops de Trás para Frente</strong> no JavaScript.</p>
+        </header>
+
+        <!-- Metaphor Section (Linguagem para Leigo) -->
+        <section class="metaphor-section">
+            <h2 class="section-title">📦 Pense nisso como no Mundo Real</h2>
+            <div class="metaphor-grid">
+                <div class="metaphor-card">
+                    <div class="metaphor-icon">🗄️</div>
+                    <h3>O Array (numeros = [])</h3>
+                    <p>Imagine uma <strong>gaveteira com várias gavetas</strong>. Ela começa 100% vazia. Cada gaveta tem uma numeração (índice), começando sempre na gaveta <strong>0</strong>.</p>
+                </div>
+                <div class="metaphor-card">
+                    <div class="metaphor-icon">📝</div>
+                    <h3>A variável (let num)</h3>
+                    <p>É como uma <strong>folha de rascunho temporária</strong>. O usuário diz um número, você anota nele rapidamente antes de guardar na gaveta certa.</p>
+                </div>
+                <div class="metaphor-card">
+                    <div class="metaphor-icon">📥</div>
+                    <h3>O método (numeros.push)</h3>
+                    <p>É a ação física de <strong>empurrar um novo objeto</strong> na próxima gaveta livre do final da gaveteira.</p>
+                </div>
+                <div class="metaphor-card">
+                    <div class="metaphor-icon">🤖</div>
+                    <h3>O Loop (for)</h3>
+                    <p>É um <strong>robô obediente</strong> que repete a mesma tarefa quantas vezes você mandar: primeiro para guardar 10 vezes, depois para ler de trás para frente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulator -->
+        <section class="simulator-section">
+            <h2 class="section-title">🎮 Simulador Passo a Passo</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                Clique no botão <strong>"Avançar 1 Passo"</strong> para ver as variáveis mudando e os dados entrando e saindo da memória!
+            </p>
+
+            <div class="sim-controls">
+                <button class="btn" id="btnNext" onclick="stepForward()">
+                    <span>▶</span> Avançar 1 Passo
+                </button>
+                <button class="btn btn-secondary" onclick="autoPlay()" id="btnAuto">
+                    <span>⚡</span> Executar Tudo
+                </button>
+                <button class="btn btn-secondary" onclick="resetSim()">
+                    <span>🔄</span> Reiniciar
+                </button>
+                <div class="sim-status" id="simStatus">Fase 1: Preparando array</div>
+            </div>
+
+            <div class="sim-grid">
+                <!-- Code Viewer -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #9CA3AF; margin-bottom: 0.5rem;">CÓDIGO JAVASCRIPT:</div>
+                    <div class="code-box" id="codeBox">
+                        <div class="code-line" id="line1"><span class="line-num">1</span> <code>var prompt = require('prompt-sync')();</code></div>
+                        <div class="code-line" id="line3"><span class="line-num">3</span> <code>let numeros = [];</code></div>
+                        <div class="code-line" id="line6"><span class="line-num">6</span> <code>console.log("Digite 10 números...");</code></div>
+                        <div class="code-line" id="line7"><span class="line-num">7</span> <code>for (let i = 0; i < 10; i++) {</code></div>
+                        <div class="code-line" id="line8"><span class="line-num">8</span> <code>&nbsp;&nbsp;let num = Number(prompt(...));</code></div>
+                        <div class="code-line" id="line9"><span class="line-num">9</span> <code>&nbsp;&nbsp;numeros.push(num);</code></div>
+                        <div class="code-line" id="line10"><span class="line-num">10</span> <code>}</code></div>
+                        <div class="code-line" id="line13"><span class="line-num">13</span> <code>console.log("\nOrdem inversa:");</code></div>
+                        <div class="code-line" id="line14"><span class="line-num">14</span> <code>for (let i = numeros.length - 1; i >= 0; i--) {</code></div>
+                        <div class="code-line" id="line15"><span class="line-num">15</span> <code>&nbsp;&nbsp;console.log(numeros[i]);</code></div>
+                        <div class="code-line" id="line16"><span class="line-num">16</span> <code>}</code></div>
+                    </div>
+                </div>
+
+                <!-- Memory and Visuals -->
+                <div class="memory-panel">
+                    <div class="var-card">
+                        <div class="var-header">
+                            <span>VARIÁVEIS EM MEMÓRIA</span>
+                            <span id="currentPhaseTag" style="color: var(--primary);">FASE: ENTRADA</span>
+                        </div>
+                        <div style="display: flex; gap: 2rem;">
+                            <div>
+                                <span style="font-size: 0.8rem; color: #9CA3AF;">Contador i:</span>
+                                <div class="var-val" id="valI">-</div>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.8rem; color: #9CA3AF;">Rascunho num:</span>
+                                <div class="var-val" id="valNum" style="color: #38BDF8;">-</div>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.8rem; color: #9CA3AF;">Total itens (.length):</span>
+                                <div class="var-val" id="valLength" style="color: #4ADE80;">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="var-card">
+                        <div class="var-header">
+                            <span>ARRAY: numeros (Gaveteira)</span>
+                            <span style="font-size: 0.75rem; color: #9CA3AF;">Índices [0 a 9]</span>
+                        </div>
+                        <div class="array-container" id="arraySlots">
+                            <span id="emptyArrayMsg" style="color: #6B7280; font-size: 0.85rem;">Array vazio [ ]</span>
+                        </div>
+                    </div>
+
+                    <div class="var-card" style="padding: 0.75rem;">
+                        <div class="var-header" style="margin-bottom: 0.4rem;">
+                            <span>TERMINAL / CONSOLE</span>
+                        </div>
+                        <div class="console-box" id="consoleOutput">
+                            <div class="console-prompt">> Sistema pronto para iniciar...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Step by Step Explanation -->
+        <section class="breakdown-section">
+            <h2 class="section-title">📖 Explicação Detalhada do Código</h2>
+
+            <!-- Card 1 -->
+            <div class="step-card green">
+                <div class="step-tag">Etapa 1: Abertura</div>
+                <h3 class="step-title">1. Inicializando a Gaveteira Vazia</h3>
+                <div class="step-code-inline">
+                    <span class="highlight-keyword">let</span> numeros = [];
+                </div>
+                <p>Aqui você cria uma lista na memória do computador. Os colchetes <code>[]</code> vazios indicam que ela ainda não tem nenhum número guardado.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="step-card">
+                <div class="step-tag">Etapa 2: Preenchimento (Entrada de Dados)</div>
+                <h3 class="step-title">2. O primeiro laço "for" (0 até 9 = 10 vezes)</h3>
+                <div class="step-code-inline">
+                    <span class="highlight-keyword">for</span> (<span class="highlight-keyword">let</span> i = <span class="highlight-num">0</span>; i &lt; <span class="highlight-num">10</span>; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-keyword">let</span> num = <span class="highlight-fn">Number</span>(<span class="highlight-fn">prompt</span>(<span class="highlight-str">"Digite o número para a posição "</span> + (i + <span class="highlight-num">1</span>) + <span class="highlight-str">": "</span>));<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;numeros.<span class="highlight-fn">push</span>(num);<br>
+                    }
+                </div>
+                <p>Esse bloco repete 10 vezes o mesmo processo:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: #D1D5DB;">
+                    <li><strong><code>let i = 0</code>:</strong> O contador começa em zero.</li>
+                    <li><strong><code>(i + 1)</code>:</strong> Como o computador conta de 0 a 9, adicionamos 1 apenas para mostrar para o usuário: "Posição 1", "Posição 2", ..., "Posição 10".</li>
+                    <li><strong><code>Number(prompt(...))</code>:</strong> O prompt lê tudo como texto. O <code>Number()</code> transforma o texto em número real para cálculos futuros.</li>
+                    <li><strong><code>let num</code>:</strong> Guarda esse número digitado temporariamente.</li>
+                    <li><strong><code>numeros.push(num)</code>:</strong> Pega o valor de <code>num</code> e coloca dentro do array.</li>
+                </ul>
+
+                <div class="q-and-a">
+                    <strong>❓ Dúvida Comum: "Por que não posso colocar direto sem o .push(num)?"</strong>
+                    Se você só fizesse <code>let num = prompt(...)</code> sem o <code>push</code>, na volta seguinte do loop a variável <code>num</code> seria apagada e substituída pelo novo número. O <code>.push()</code> é quem garante que o número fique salvo na lista!
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="step-card amber">
+                <div class="step-tag">Etapa 3: Exibição Inversa (Saída de Dados)</div>
+                <h3 class="step-title">3. O segundo laço "for" (De trás para frente)</h3>
+                <div class="step-code-inline">
+                    <span class="highlight-keyword">for</span> (<span class="highlight-keyword">let</span> i = numeros.length - <span class="highlight-num">1</span>; i &gt;= <span class="highlight-num">0</span>; i--) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight-fn">console.log</span>(numeros[i]);<br>
+                    }
+                </div>
+                <p>Aqui está o segredo da ordem inversa:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: #D1D5DB;">
+                    <li><strong><code>numeros.length - 1</code>:</strong> O array tem 10 itens no total, mas as posições vão de <strong>0 a 9</strong>. Logo, o último item está no índice <code>10 - 1 = 9</code>. O <code>i</code> começa em 9!</li>
+                    <li><strong><code>i >= 0</code>:</strong> O laço continua funcionando até chegar no primeiro elemento (índice 0).</li>
+                    <li><strong><code>i--</code>:</strong> Em vez de somar, nós <strong>subtraímos 1</strong> a cada volta (9, 8, 7, 6, 5, 4, 3, 2, 1, 0).</li>
+                    <li><strong><code>numeros[i]</code>:</strong> Abre a gaveta <code>i</code> e mostra o valor que está lá dentro.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section>
+            <h2 class="section-title">💡 Perguntas Rápidas para Fixar</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>🔢 Por que arrays começam no índice 0?</h4>
+                    <p>Na ciência da computação, o índice representa o <em>deslocamento (distância)</em> a partir do início da memória. O primeiro item está a 0 posições do início.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>🔄 Qual a diferença entre i++ e i--?</h4>
+                    <p><code>i++</code> adiciona 1 (anda para a frente: 0, 1, 2...). <code>i--</code> retira 1 (anda de ré: 9, 8, 7...).</p>
+                </div>
+                <div class="faq-item">
+                    <h4>📏 Por que length - 1 e não apenas length?</h4>
+                    <p>Se o array tem 10 elementos, <code>numeros.length</code> vale 10. Se você tentar acessar <code>numeros[10]</code>, dará <em>undefined</em>, pois as gavetas vão só até a 9!</p>
+                </div>
+                <div class="faq-item">
+                    <h4>📦 Daria para fazer sem a variável "let num"?</h4>
+                    <p>Sim! Poderia ser: <code>numeros.push(Number(prompt(...)))</code>. Criar a variável <code>num</code> é apenas uma boa prática para quem está aprendendo ler com mais calma.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Exercício 01 • Lógica de Programação com JavaScript & Node.js • SENAI Backend
+        </footer>
+    </div>
+
+    <!-- Simulator Logic -->
+    <script>
+        const sampleNumbers = [14, 28, 35, 42, 59, 63, 77, 81, 95, 100];
+        let currentStep = 0;
+        let simArray = [];
+        let autoPlayTimer = null;
+
+        // Steps sequence
+        // 0: start -> line 3
+        // 1..10: input loop (read num -> push)
+        // 11: transition to reverse
+        // 12..21: print reverse
+        // 22: done
+
+        function highlightLine(lineId) {
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+            if (lineId) {
+                const line = document.getElementById(lineId);
+                if (line) line.classList.add('active');
+            }
+        }
+
+        function logConsole(msg, isPrompt = false) {
+            const c = document.getElementById('consoleOutput');
+            const row = document.createElement('div');
+            if (isPrompt) row.className = 'console-prompt';
+            row.textContent = msg;
+            c.appendChild(row);
+            c.scrollTop = c.scrollHeight;
+        }
+
+        function renderArray(highlightIndex = -1, isReverse = false) {
+            const container = document.getElementById('arraySlots');
+            if (simArray.length === 0) {
+                container.innerHTML = '<span id="emptyArrayMsg" style="color: #6B7280; font-size: 0.85rem;">Array vazio [ ]</span>';
+                document.getElementById('valLength').textContent = "0";
+                return;
+            }
+
+            container.innerHTML = '';
+            simArray.forEach((val, idx) => {
+                const slot = document.createElement('div');
+                slot.className = 'array-slot';
+                if (idx === highlightIndex) {
+                    slot.classList.add(isReverse ? 'reverse-highlight' : 'highlight');
+                }
+                slot.innerHTML = `
+                    <span class="slot-val">${val}</span>
+                    <span class="slot-index">[${idx}]</span>
+                `;
+                container.appendChild(slot);
+            });
+
+            document.getElementById('valLength').textContent = simArray.length;
+        }
+
+        function stepForward() {
+            if (currentStep === 0) {
+                highlightLine('line3');
+                document.getElementById('simStatus').textContent = "Criou o array vazio: let numeros = []";
+                renderArray();
+                currentStep++;
+            } else if (currentStep >= 1 && currentStep <= 10) {
+                const loopIndex = currentStep - 1;
+                const mockVal = sampleNumbers[loopIndex];
+
+                // Reading & pushing
+                highlightLine('line8');
+                document.getElementById('valI').textContent = loopIndex;
+                document.getElementById('valNum').textContent = mockVal;
+                document.getElementById('currentPhaseTag').textContent = "FASE: ENTRADA (" + (loopIndex + 1) + "/10)";
+                document.getElementById('simStatus').textContent = `Lendo valor ${mockVal} e executando numeros.push(${mockVal})`;
+
+                logConsole(`Digite o número para a posição ${loopIndex + 1}: ${mockVal}`, true);
+
+                setTimeout(() => {
+                    highlightLine('line9');
+                    simArray.push(mockVal);
+                    renderArray(loopIndex, false);
+                }, 150);
+
+                currentStep++;
+            } else if (currentStep === 11) {
+                highlightLine('line13');
+                document.getElementById('currentPhaseTag').textContent = "FASE: SAÍDA (ORDEM INVERSA)";
+                document.getElementById('simStatus').textContent = "Iniciando laço reverso (i = length - 1 até 0)";
+                logConsole("\nNúmeros na ordem inversa:");
+                currentStep++;
+            } else if (currentStep >= 12 && currentStep <= 21) {
+                const reverseIndex = 21 - currentStep; // 9 down to 0
+                highlightLine('line15');
+                document.getElementById('valI').textContent = reverseIndex;
+                document.getElementById('valNum').textContent = "-";
+                document.getElementById('simStatus').textContent = `Lendo gaveta [${reverseIndex}] -> valor: ${simArray[reverseIndex]}`;
+
+                renderArray(reverseIndex, true);
+                logConsole(`Saída: ${simArray[reverseIndex]}`);
+
+                currentStep++;
+            } else {
+                highlightLine(null);
+                document.getElementById('simStatus').textContent = "✅ Execução finalizada com sucesso!";
+                document.getElementById('btnNext').disabled = true;
+                if (autoPlayTimer) clearInterval(autoPlayTimer);
+            }
+        }
+
+        function autoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+                document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+                return;
+            }
+
+            document.getElementById('btnAuto').innerHTML = '<span>⏸</span> Pausar';
+            autoPlayTimer = setInterval(() => {
+                if (currentStep > 21) {
+                    clearInterval(autoPlayTimer);
+                    autoPlayTimer = null;
+                    document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+                } else {
+                    stepForward();
+                }
+            }, 600);
+        }
+
+        function resetSim() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+                document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+            }
+            currentStep = 0;
+            simArray = [];
+            document.getElementById('btnNext').disabled = false;
+            document.getElementById('valI').textContent = "-";
+            document.getElementById('valNum').textContent = "-";
+            document.getElementById('valLength').textContent = "0";
+            document.getElementById('currentPhaseTag').textContent = "FASE: ENTRADA";
+            document.getElementById('simStatus').textContent = "Fase 1: Preparando array";
+            document.getElementById('consoleOutput').innerHTML = '<div class="console-prompt">> Sistema reiniciado. Clique em "Avançar 1 Passo".</div>';
+            renderArray();
+            highlightLine(null);
+        }
+    </script>
+</body>
+</html>

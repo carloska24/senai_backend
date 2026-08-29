@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Estudos SENAI • Lógica de Programação JavaScript</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #111827;
+            --bg-card-hover: #1F2937;
+            --border-color: #374151;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --primary: #6366F1;
+            --primary-glow: rgba(99, 102, 241, 0.25);
+            --accent-green: #10B981;
+            --accent-green-glow: rgba(16, 185, 129, 0.25);
+            --accent-amber: #F59E0B;
+            --accent-amber-glow: rgba(245, 158, 11, 0.25);
+            --accent-cyan: #06B6D4;
+            --accent-purple: #8B5CF6;
+            --text-main: #F9FAFB;
+            --text-muted: #9CA3AF;
+            --code-bg: #1E1E1E; /* VS Code Native Dark Editor Background */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem 4rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.25rem;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 9999px;
+            color: #A5B4FC;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF 0%, #A5B4FC 50%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        /* Module Bar (Aulas 1, 2 e 3) */
+        .module-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .module-btn {
+            background: #111827;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.6rem 1.35rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .module-btn.active {
+            background: var(--primary);
+            border-color: #818CF8;
+            color: #FFF;
+            box-shadow: 0 4px 18px var(--primary-glow);
+        }
+
+        .module-btn:hover:not(.active) {
+            background: #1F2937;
+            color: #FFF;
+            transform: translateY(-1px);
+        }
+
+        /* Section Categorized Hub */
+        .hub-container {
+            background: #111827;
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .hub-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hub-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #9CA3AF;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-filter-bar {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .cat-filter-btn {
+            background: #1F2937;
+            border: 1px solid #374151;
+            color: var(--text-muted);
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.775rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .cat-filter-btn:hover {
+            background: #374151;
+            color: #FFF;
+        }
+
+        .cat-filter-btn.active {
+            background: var(--primary);
+            border-color: #818CF8;
+            color: #FFF;
+        }
+
+        /* Exercise Cards Grid */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .ex-card-btn {
+            background: #1F2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 0.85rem 1rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .ex-card-btn:hover {
+            background: #283548;
+            transform: translateY(-2px);
+            border-color: #4B5563;
+        }
+
+        .ex-card-btn.active {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 18px var(--primary-glow);
+        }
+
+        .ex-card-btn.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+        }
+
+        .ex-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ex-card-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            background: #374151;
+            color: #93C5FD;
+        }
+
+        .ex-card-btn.active .ex-card-badge {
+            background: var(--primary);
+            color: #FFF;
+        }
+
+        .ex-card-session-tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9CA3AF;
+        }
+
+        .ex-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #FFF;
+        }
+
+        .ex-card-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Metaphor Section */
+        .metaphor-section {
+            background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .metaphor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .metaphor-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .metaphor-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .metaphor-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metaphor-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            color: #E0E7FF;
+        }
+
+        .metaphor-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Simulator */
+        .simulator-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        button.btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.4rem;
+            font-size: 0.925rem;
+            font-weight: 600;
+            border-radius: 0.625rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            font-family: inherit;
+        }
+
+        button.btn:hover {
+            background: #4F46E5;
+            transform: translateY(-1px);
+        }
+
+        button.btn-secondary {
+            background: #374151;
+            box-shadow: none;
+        }
+
+        button.btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .sim-status {
+            margin-left: auto;
+            color: #38BDF8;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Real VS Code Editor Look & Feel */
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid #333333;
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .code-line {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: background-color 0.2s;
+            line-height: 1.6;
+            white-space: pre; /* VS Code Exact indentation & No awkward wrapping */
+        }
+
+        .code-line.active {
+            background: rgba(99, 102, 241, 0.3);
+            border-left: 3px solid var(--primary);
+            color: #FFF;
+            font-weight: 600;
+        }
+
+        .line-num {
+            color: #858585;
+            user-select: none;
+            width: 1.75rem;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        .code-line code {
+            font-family: 'Fira Code', monospace;
+            color: #D4D4D4;
+        }
+
+        /* 🌈 EXACT VS CODE SYNTAX & RAINBOW BRACKETS 🌈 */
+        .c-kw { color: #C586C0; font-weight: 600; }     /* let, var, if, else, for, while, return (VS Code Purple) */
+        .c-fn { color: #DCDCAA; }                      /* prompt, require, log, push, toFixed (VS Code Function Gold) */
+        .c-obj { color: #4EC9B0; }                     /* console, Number, Math (VS Code Teal) */
+        .c-str { color: #CE9178; }                     /* "strings" / 'strings' (VS Code Terracotta/Orange) */
+        .c-num { color: #B5CEA8; }                     /* 2, 365, 0.08, 18 (VS Code Light Olive Green) */
+        .c-cmt { color: #6A9955; font-style: italic; } /* // comments (VS Code Green Italic) */
+        .c-op { color: #D4D4D4; }                      /* =, +, -, *, / (VS Code Neutral) */
+        .c-var { color: #9CDCFE; }                     /* numero1, total, idade (VS Code Light Blue) */
+
+        /* 🌈 Rainbow Bracket Pair Colors */
+        .c-b1 { color: #FFD700; font-weight: 700; }    /* Gold / Yellow (Level 1 Outer) */
+        .c-b2 { color: #DA70D6; font-weight: 700; }    /* Orchid / Pink (Level 2 Inner) */
+        .c-b3 { color: #179FFF; font-weight: 700; }    /* Sky Blue (Level 3 Deep) */
+
+        /* Memory Display */
+        .memory-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .var-card {
+            background: #1F2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1.15rem;
+        }
+
+        .var-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: #9CA3AF;
+            letter-spacing: 0.05em;
+        }
+
+        .vars-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .var-slot {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .var-label {
+            font-size: 0.75rem;
+            color: #9CA3AF;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .var-val {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: #FBBF24;
+            font-weight: 700;
+        }
+
+        /* Console Window */
+        .console-box {
+            background: #000;
+            border: 1px solid #1F2937;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            min-height: 120px;
+            max-height: 170px;
+            overflow-y: auto;
+            color: #4ADE80;
+        }
+
+        .console-line {
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .console-prompt { color: #60A5FA; }
+        .console-warn { color: #FBBF24; }
+
+        /* Detailed Breakdown Cards */
+        .breakdown-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--primary);
+        }
+
+        .step-card.green::before { background: var(--accent-green); }
+        .step-card.amber::before { background: var(--accent-amber); }
+        .step-card.cyan::before { background: var(--accent-cyan); }
+        .step-card.purple::before { background: var(--accent-purple); }
+
+        .step-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .step-card.green .step-tag { color: var(--accent-green); }
+        .step-card.amber .step-tag { color: var(--accent-amber); }
+        .step-card.cyan .step-tag { color: var(--accent-cyan); }
+        .step-card.purple .step-tag { color: var(--accent-purple); }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #FFF;
+        }
+
+        .step-code-inline {
+            background: var(--code-bg);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #E2E8F0;
+            margin: 0.75rem 0;
+            border-left: 3px solid #6366F1;
+            white-space: pre-wrap;
+        }
+
+        /* FAQ Grid */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+        }
+
+        .faq-item h4 {
+            color: #E0E7FF;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Bottom Pagination */
+        .nav-pagination {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="badge">🚀 SENAI Backend • JavaScript Completo</div>
+            <h1 id="pageTitle">Guia Visual e Interativo de Lógica</h1>
+            <p class="subtitle" id="pageSubtitle">Aprenda a programar com cores nativas do VS Code, parênteses coloridos (Rainbow Brackets) e explicações para leigos.</p>
+        </header>
+
+        <!-- Module Bar (Aulas 1, 2 e 3) -->
+        <div class="module-bar">
+            <button class="module-btn active" id="modBtn1" onclick="switchModule(1)">📂 Aula 1: Estruturas Sequenciais</button>
+            <button class="module-btn" id="modBtn2" onclick="switchModule(2)">🔀 Aula 2: Estruturas de Decisão</button>
+            <button class="module-btn" id="modBtn3" onclick="switchModule(3)">🔁 Aula 3: Repetição & Vetores</button>
+        </div>
+
+        <!-- Section / Session Hub & Filter -->
+        <div class="hub-container">
+            <div class="hub-header">
+                <div class="hub-title" id="hubTitle">
+                    <span>🗂️ SESSÕES DA AULA 1: ESTRUTURAS SEQUENCIAIS</span>
+                </div>
+                <div class="category-filter-bar" id="categoryFilterBar">
+                    <!-- Populated dynamically per Module -->
+                </div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="exercise-grid" id="exerciseGrid">
+                <!-- Dynamically populated cards -->
+            </div>
+        </div>
+
+        <!-- Dynamic Main Content Area for the selected exercise -->
+        <div id="exerciseContent">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+
+        <!-- Bottom Pagination (Anterior / Próximo) -->
+        <div class="nav-pagination">
+            <button class="btn btn-secondary" id="btnPrev" onclick="navigatePrev()">
+                <span>⬅</span> Exercício Anterior
+            </button>
+            <button class="btn btn-secondary" id="btnNextEx" onclick="navigateNext()">
+                Próximo Exercício <span>➡</span>
+            </button>
+        </div>
+
+        <footer>
+            Curso Backend Senai • Lógica de Programação com Node.js • Guia Completo com Syntax Highlighting & Rainbow Brackets
+        </footer>
+    </div>
+
+    <!-- Application Database & Highlighting Engine -->
+    <script>
+        // Database for Aula 1, Aula 2, and Aula 3
+        const courseData = {
+            1: {
+                title: "Aula 1: Estruturas Sequenciais",
+                sessions: [
+                    { id: "all", name: "Todos (10)" },
+                    { id: "saida", name: "1. Saída de Dados" },
+                    { id: "aritmetica", name: "2. Aritmética Básica" },
+                    { id: "formulas", name: "3. Fórmulas & Expressões" },
+                    { id: "desafios", name: "4. Desafios Comerciais" }
+                ],
+                exercises: [
+                    {
+                        id: "a1_ex01",
+                        num: "01",
+                        session: "saida",
+                        sessionName: "1. Saída de Dados",
+                        tabName: "01. Olá Mundo",
+                        file: "Aula1/Exercicio01.js",
+                        title: "Exercício 01 • Olá Mundo!",
+                        subtitle: "Sessão: <strong>Saída de Dados</strong> • Comunicação com o console via <strong>console.log()</strong>.",
+                        cardDesc: "Comunicação inicial e exibição no terminal.",
+                        metaphors: [
+                            { icon: "🗣️", title: "O console.log()", desc: "É a 'boca' do programa. Tudo o que você colocar entre parênteses e aspas será falado em voz alta no terminal." },
+                            { icon: "📜", title: "O Texto (\"Ola mundo!\")", desc: "Representa uma 'String' (texto). As aspas avisam o computador que é uma mensagem de texto e não uma conta." },
+                            { icon: "⚡", title: "Execução Direta", desc: "Como não pede nada ao usuário, o computador executa o comando na velocidade da luz e termina o trabalho." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Exibe a mensagem de boas-vindas na tela\nconsole.log("Ola mundo!");`,
+                        variables: [],
+                        steps: [
+                            { line: 1, msg: "Carregando o módulo prompt-sync no Node.js", vars: {}, console: null },
+                            { line: 4, msg: "Executando console.log(\"Ola mundo!\")", vars: {}, console: { text: "Ola mundo!", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "green",
+                                tag: "Sessão 1: Saída de Dados",
+                                title: "1. Exibindo Mensagem no Console",
+                                code: 'console.log("Ola mundo!");',
+                                text: "O comando <code>console.log()</code> imprime qualquer informação no terminal. O texto precisa estar entre aspas <code>\"...\"</code> para que o computador saiba que são palavras."
+                            }
+                        ],
+                        faq: [
+                            { q: "Por que precisa das aspas?", a: "Sem aspas, o JavaScript pensa que 'Ola' é o nome de uma variável ou função e gera um erro de sintaxe." },
+                            { q: "Para que serve a linha do prompt-sync?", a: "É a biblioteca que permite capturar o que o usuário digita no terminal. Mesmo não sendo usada neste exercício simples, é padrão nos exercícios do Senai." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex02",
+                        num: "02",
+                        session: "aritmetica",
+                        sessionName: "2. Aritmética Básica",
+                        tabName: "02. Soma de Números",
+                        file: "Aula1/Exercicio02.js",
+                        title: "Exercício 02 • Soma de Dois Números",
+                        subtitle: "Sessão: <strong>Aritmética Básica</strong> • Entrada com <strong>prompt()</strong>, conversão com <strong>Number()</strong> e soma com <strong>+</strong>.",
+                        cardDesc: "Lê dois números inteiros e calcula a soma.",
+                        metaphors: [
+                            { icon: "📥", title: "prompt()", desc: "O ouvido do computador. Ele para e espera o usuário digitar uma resposta no teclado." },
+                            { icon: "🔄", title: "Number()", desc: "O tradutor. O prompt sempre ouve tudo como texto ('10'). O Number() transforma esse texto em um número de verdade (10)." },
+                            { icon: "📦", title: "let total", desc: "A caixinha de resultado. Ela recebe a soma dos dois números e guarda até a hora de mostrar na tela." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: lê os dois números informados pelo usuário\nlet numero1 = Number(prompt("Digite o primeiro número: "));\nlet numero2 = Number(prompt("Digite o segundo número: "));\n\n// Processamento: calcula a soma entre eles\nlet total = numero1 + numero2;\n\n// Saída de dados: exibe o resultado final da soma\nconsole.log("A soma dos dois números é: " + total);`,
+                        variables: [
+                            { id: "numero1", label: "numero1", defaultVal: "-" },
+                            { id: "numero2", label: "numero2", defaultVal: "-" },
+                            { id: "total", label: "total", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo o primeiro número (Ex: 15)", vars: { "numero1": 15 }, console: { text: "Digite o primeiro número: 15", isPrompt: true } },
+                            { line: 5, msg: "Lendo o segundo número (Ex: 25)", vars: { "numero1": 15, "numero2": 25 }, console: { text: "Digite o segundo número: 25", isPrompt: true } },
+                            { line: 8, msg: "Calculando a soma: 15 + 25 = 40", vars: { "numero1": 15, "numero2": 25, "total": 40 }, console: null },
+                            { line: 11, msg: "Exibindo a frase com o total", vars: { "numero1": 15, "numero2": 25, "total": 40 }, console: { text: "A soma dos dois números é: 40", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "cyan",
+                                tag: "Etapa 1: Entrada de Dados",
+                                title: "1. Leitura e Conversão",
+                                code: 'let numero1 = Number(prompt("Digite o primeiro número: "));',
+                                text: "O <code>prompt</code> captura o que você digitou. O <code>Number()</code> transforma o texto em número. O resultado é guardado na variável <code>numero1</code>."
+                            },
+                            {
+                                type: "amber",
+                                tag: "Etapa 2: Processamento",
+                                title: "2. Realizando o Cálculo",
+                                code: "let total = numero1 + numero2;",
+                                text: "O sinal de <code>+</code> entre dois números realiza a operação matemática de soma e armazena na variável <code>total</code>."
+                            },
+                            {
+                                type: "green",
+                                tag: "Etapa 3: Saída de Dados",
+                                title: "3. Juntando Texto com Número",
+                                code: 'console.log("A soma dos dois números é: " + total);',
+                                text: "Aqui o <code>+</code> faz o papel de <strong>concatenação</strong> (juntar o texto com o valor da variável)."
+                            }
+                        ],
+                        faq: [
+                            { q: "O que acontece se esquecer o Number()?", a: "O JavaScript vai colar os textos como '15' + '25' = '1525' em vez de somar 40." },
+                            { q: "O que significa 'let'?", a: "É a palavra-chave usada para criar (declarar) uma nova variável na memória." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex04",
+                        num: "04",
+                        session: "aritmetica",
+                        sessionName: "2. Aritmética Básica",
+                        tabName: "04. Dobro de Número",
+                        file: "Aula1/Exercicio04.js",
+                        title: "Exercício 04 • O Dobro de um Número",
+                        subtitle: "Sessão: <strong>Aritmética Básica</strong> • Multiplicação direta em JavaScript usando o operador <strong>*</strong>.",
+                        cardDesc: "Calcula o dobro de qualquer número informado.",
+                        metaphors: [
+                            { icon: "🔢", title: "O Número Base", desc: "Qualquer valor escolhido pelo usuário para ser duplicado." },
+                            { icon: "✖️", title: "O Asterisco (*)", desc: "É o símbolo oficial da multiplicação na programação (nunca usamos a letra 'x')." },
+                            { icon: "✨", title: "O Dobro", desc: "O valor multiplicado exatamente por 2." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita um número para calcular o dobro\nlet numero = Number(prompt("Digite o número! Vamos calcular o dobro desse número: "));\n\n// Processamento: calcula o dobro do número digitado\nlet dobro = numero * 2;\n\n// Saída de dados: exibe o resultado\nconsole.log("O dobro do número digitado é: " + dobro);`,
+                        variables: [
+                            { id: "numero", label: "numero", defaultVal: "-" },
+                            { id: "dobro", label: "dobro", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo o número (Ex: 14)", vars: { "numero": 14 }, console: { text: "Digite o número! Vamos calcular o dobro desse número: 14", isPrompt: true } },
+                            { line: 7, msg: "Calculando dobro: 14 * 2 = 28", vars: { "numero": 14, "dobro": 28 }, console: null },
+                            { line: 10, msg: "Exibindo o resultado", vars: { "numero": 14, "dobro": 28 }, console: { text: "O dobro do número digitado é: 28", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "cyan",
+                                tag: "Cálculo Direto",
+                                title: "1. Multiplicação por 2",
+                                code: "let dobro = numero * 2;",
+                                text: "Multiplica o valor inserido na variável <code>numero</code> por 2 e salva na variável <code>dobro</code>."
+                            }
+                        ],
+                        faq: [
+                            { q: "Como calcularia o triplo?", a: "Basta multiplicar por 3: numero * 3." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex07",
+                        num: "07",
+                        session: "aritmetica",
+                        sessionName: "2. Aritmética Básica",
+                        tabName: "07. Antecessor",
+                        file: "Aula1/Exercicio07.js",
+                        title: "Exercício 07 • Número Antecessor",
+                        subtitle: "Sessão: <strong>Aritmética Básica</strong> • Subtração de 1 unidade com o operador <strong>-</strong>.",
+                        cardDesc: "Descobre quem vem antes na reta numérica.",
+                        metaphors: [
+                            { icon: "🎯", title: "Número Atual", desc: "A posição em que você está na reta dos números." },
+                            { icon: "⬅️", title: "Subtrair 1 (- 1)", desc: "Dar exatamente um passo para trás na contagem." },
+                            { icon: "⏮️", title: "O Antecessor", desc: "O número imediatamente anterior." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita um número ao usuário\nlet numero = Number(prompt("Digite o número: "));\n\n// Processamento: calcula o antecessor subtraindo 1\nlet antecessor = numero - 1;\n\n// Saída de dados: exibe o valor do antecessor\nconsole.log("O antecessor é: " + antecessor);`,
+                        variables: [
+                            { id: "numero", label: "numero", defaultVal: "-" },
+                            { id: "antecessor", label: "antecessor", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo o número (Ex: 50)", vars: { "numero": 50 }, console: { text: "Digite o número: 50", isPrompt: true } },
+                            { line: 7, msg: "Calculando antecessor: 50 - 1 = 49", vars: { "numero": 50, "antecessor": 49 }, console: null },
+                            { line: 10, msg: "Exibindo o antecessor", vars: { "numero": 50, "antecessor": 49 }, console: { text: "O antecessor é: 49", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "amber",
+                                tag: "Subtração",
+                                title: "1. Voltando uma casa",
+                                code: "let antecessor = numero - 1;",
+                                text: "Diminui 1 unidade do valor fornecido pelo usuário."
+                            }
+                        ],
+                        faq: [
+                            { q: "Qual o antecessor de zero?", a: "O antecessor de 0 é -1 (número negativo)." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex03",
+                        num: "03",
+                        session: "formulas",
+                        sessionName: "3. Fórmulas & Expressões",
+                        tabName: "03. Média de Notas",
+                        file: "Aula1/Exercicio03.js",
+                        title: "Exercício 03 • Média de Duas Notas",
+                        subtitle: "Sessão: <strong>Fórmulas & Expressões</strong> • Prioridade de operadores matemáticos com <strong>( )</strong>.",
+                        cardDesc: "Precedência matemática na média escolar.",
+                        metaphors: [
+                            { icon: "📝", title: "As Notas (nota1, nota2)", desc: "Duas notas obtidas pelo aluno em provas distintas durante o bimestre." },
+                            { icon: "🛡️", title: "Os Parênteses ( )", desc: "Funcionam como um escudo de prioridade. Obrigam o computador a somar as notas antes de fazer qualquer divisão." },
+                            { icon: "⚖️", title: "A Média (/ 2)", desc: "Divide a pontuação acumulada pelo total de provas para encontrar o valor equilibrado." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita as duas notas\nlet nota1 = Number(prompt("Digite a primeira nota: "));\nlet nota2 = Number(prompt("Digite a segunda nota: "));\n\n// Processamento: calcula a média aritmética das notas\nlet media = (nota1 + nota2) / 2;\n\n// Saída de dados: exibe a média calculada\nconsole.log("A média entre as duas notas é: " + media);`,
+                        variables: [
+                            { id: "nota1", label: "nota1", defaultVal: "-" },
+                            { id: "nota2", label: "nota2", defaultVal: "-" },
+                            { id: "media", label: "media", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo a nota 1 (Ex: 8.0)", vars: { "nota1": 8.0 }, console: { text: "Digite a primeira nota: 8", isPrompt: true } },
+                            { line: 5, msg: "Lendo a nota 2 (Ex: 6.0)", vars: { "nota1": 8.0, "nota2": 6.0 }, console: { text: "Digite a segunda nota: 6", isPrompt: true } },
+                            { line: 8, msg: "Calculando média: (8 + 6) / 2 = 14 / 2 = 7.0", vars: { "nota1": 8.0, "nota2": 6.0, "media": 7.0 }, console: null },
+                            { line: 11, msg: "Exibindo a média final", vars: { "nota1": 8.0, "nota2": 6.0, "media": 7.0 }, console: { text: "A média entre as duas notas é: 7", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "amber",
+                                tag: "Regra Fundamental da Matemática",
+                                title: "1. Por que usar parênteses?",
+                                code: "let media = (nota1 + nota2) / 2;",
+                                text: "Na programação, a divisão <code>/</code> sempre é executada antes da soma <code>+</code>. Se você escrever <code>nota1 + nota2 / 2</code> sem parênteses, apenas a segunda nota seria dividida por 2!"
+                            }
+                        ],
+                        faq: [
+                            { q: "E se fossem 3 notas?", a: "A fórmula seria: (nota1 + nota2 + nota3) / 3." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex05",
+                        num: "05",
+                        session: "formulas",
+                        sessionName: "3. Fórmulas & Expressões",
+                        tabName: "05. Área do Retângulo",
+                        file: "Aula1/Exercicio05.js",
+                        title: "Exercício 05 • Área do Retângulo",
+                        subtitle: "Sessão: <strong>Fórmulas & Expressões</strong> • Aplicação geométrica simples: <strong>Base × Altura</strong>.",
+                        cardDesc: "Cálculo de área geométrica a partir de duas medidas.",
+                        metaphors: [
+                            { icon: "📏", title: "A Base", desc: "A largura horizontal do retângulo." },
+                            { icon: "📐", title: "A Altura", desc: "O comprimento vertical do retângulo." },
+                            { icon: "🗺️", title: "A Área", desc: "O espaço interno total coberto pelo retângulo." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a base e a altura do retângulo\nlet base = Number(prompt("Digite a base: "));\nlet altura = Number(prompt("Digite a altura: "));\n\n// Processamento: calcula a área do retângulo (base * altura)\nlet area = base * altura;\n\n// Saída de dados: exibe a área calculada\nconsole.log("A área do retângulo é: " + area);`,
+                        variables: [
+                            { id: "base", label: "base", defaultVal: "-" },
+                            { id: "altura", label: "altura", defaultVal: "-" },
+                            { id: "area", label: "area", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo a base (Ex: 10)", vars: { "base": 10 }, console: { text: "Digite a base: 10", isPrompt: true } },
+                            { line: 5, msg: "Lendo a altura (Ex: 5)", vars: { "base": 10, "altura": 5 }, console: { text: "Digite a altura: 5", isPrompt: true } },
+                            { line: 8, msg: "Calculando área: 10 * 5 = 50", vars: { "base": 10, "altura": 5, "area": 50 }, console: null },
+                            { line: 11, msg: "Exibindo a área calculada", vars: { "base": 10, "altura": 5, "area": 50 }, console: { text: "A área do retângulo é: 50", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "green",
+                                tag: "Fórmula Geométrica",
+                                title: "1. Multiplicando as Dimensões",
+                                code: "let area = base * altura;",
+                                text: "Multiplica a largura (base) pelo comprimento (altura) para obter a área total do retângulo."
+                            }
+                        ],
+                        faq: [
+                            { q: "Serve para quadrados também?", a: "Sim, pois todo quadrado é um retângulo com lados iguais." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex06",
+                        num: "06",
+                        session: "formulas",
+                        sessionName: "3. Fórmulas & Expressões",
+                        tabName: "06. Dias de Vida",
+                        file: "Aula1/Exercicio06.js",
+                        title: "Exercício 06 • Dias de Vida Aproximados",
+                        subtitle: "Sessão: <strong>Fórmulas & Expressões</strong> • Proporção temporal multiplicando anos por <strong>365</strong>.",
+                        cardDesc: "Converte anos de idade em dias corridos de vida.",
+                        metaphors: [
+                            { icon: "🎂", title: "Idade em Anos", desc: "A quantidade de aniversários completos que a pessoa já comemorou." },
+                            { icon: "📅", title: "365 Dias", desc: "A quantidade média de voltas que a Terra dá em torno de si mesma a cada ano." },
+                            { icon: "⏳", title: "Total de Dias", desc: "A contagem acumulada de dias de vida." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a idade do usuário\nlet idade = Number(prompt("Digite sua idade: "));\n\n// Processamento: calcula os dias de vida aproximados\nlet calculaIdade = idade * 365;\n\n// Saída de dados: exibe a quantidade total de dias\nconsole.log("Você tem " + calculaIdade + " dias de vida!");`,
+                        variables: [
+                            { id: "idade", label: "idade", defaultVal: "-" },
+                            { id: "calculaIdade", label: "calculaIdade", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo a idade (Ex: 20)", vars: { "idade": 20 }, console: { text: "Digite sua idade: 20", isPrompt: true } },
+                            { line: 7, msg: "Calculando dias: 20 * 365 = 7300", vars: { "idade": 20, "calculaIdade": 7300 }, console: null },
+                            { line: 10, msg: "Exibindo a mensagem final", vars: { "idade": 20, "calculaIdade": 7300 }, console: { text: "Você tem 7300 dias de vida!", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "cyan",
+                                tag: "Conversão Temporal",
+                                title: "1. Multiplicando por 365",
+                                code: "let calculaIdade = idade * 365;",
+                                text: "Cada 1 ano possui 365 dias, portanto multiplicamos a idade pelo total de dias de um ano padrão."
+                            }
+                        ],
+                        faq: [
+                            { q: "E os anos bissextos?", a: "Por simplicidade de lógica inicial, consideramos todos os anos com 365 dias." }
+                        ]
+                    },
+                    {
+                        id: "a1_ex08",
+                        num: "08",
+                        session: "formulas",
+                        sessionName: "3. Fórmulas & Expressões",
+                        tabName: "08. Celsius ➔ Fah",
+                        file: "Aula1/Exercicio08.js",
+                        title: "Exercício 08 • Celsius para Fahrenheit",
+                        subtitle: "Sessão: <strong>Fórmulas & Expressões</strong> • Conversão de escala de temperatura: <strong>C × (9/5) + 32</strong>.",
+                        cardDesc: "Fórmula termométrica de Celsius para Fahrenheit.",
+                        metaphors: [
+                            { icon: "🌡️", title: "Graus Celsius (°C)", desc: "A escala que usamos no Brasil (0°C é o congelamento da água)." },
+                            { icon: "🧪", title: "Fator (9/5) + 32", desc: "A proporção entre as duas escalas. Na escala Fahrenheit a água congela em 32°F." },
+                            { icon: "🇺🇸", title: "Fahrenheit (°F)", desc: "A escala muito utilizada nos Estados Unidos." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a temperatura em graus Celsius\nlet grausCelsius = Number(prompt("Digite a temperatura em graus celsius: "));\n\n// Processamento: converte a temperatura de Celsius para Fahrenheit\nlet fahrenheit = grausCelsius * (9 / 5) + 32;\n\n// Saída de dados: exibe a temperatura em Fahrenheit\nconsole.log("A temperatura em Fahrenheit é: " + fahrenheit);`,
+                        variables: [
+                            { id: "grausCelsius", label: "grausCelsius", defaultVal: "-" },
+                            { id: "fahrenheit", label: "fahrenheit", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo graus Celsius (Ex: 25°C)", vars: { "grausCelsius": 25 }, console: { text: "Digite a temperatura em graus celsius: 25", isPrompt: true } },
+                            { line: 7, msg: "Calculando Fah: 25 * 1.8 + 32 = 45 + 32 = 77", vars: { "grausCelsius": 25, "fahrenheit": 77 }, console: null },
+                            { line: 10, msg: "Exibindo a conversão", vars: { "grausCelsius": 25, "fahrenheit": 77 }, console: { text: "A temperatura em Fahrenheit é: 77", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "purple",
+                                tag: "Fórmula de Conversão",
+                                title: "1. Aplicando a Proporção",
+                                code: "let fahrenheit = grausCelsius * (9 / 5) + 32;",
+                                text: "Multiplica a temperatura por 9/5 (1.8) e adiciona 32 para alinhar o ponto de congelamento."
+                            }
+                        ],
+                        faq: [
+                            { q: "Quanto é 0°C em Fahrenheit?", a: "0 * 1.8 + 32 = exatamente 32°F." }
+                        ]
+                    },
+                    {
+                        id: "a1_desafio01",
+                        num: "⭐",
+                        session: "desafios",
+                        sessionName: "4. Desafios Comerciais",
+                        tabName: "⭐ Desafio: Caixa",
+                        file: "Aula1/Desafio.js",
+                        title: "Desafio 01 • Caixa & Troco",
+                        subtitle: "Sessão: <strong>Desafios Comerciais</strong> • Múltiplas entradas com textos e números, total e cálculo de troco.",
+                        cardDesc: "Frente de caixa de loja, total de compra e troco.",
+                        metaphors: [
+                            { icon: "🛒", title: "Produto & Quantidade", desc: "Itens que o cliente colocou na esteira do caixa para comprar." },
+                            { icon: "💵", title: "totalCompra", desc: "Multiplicação do preço pela quantidade de itens." },
+                            { icon: "🪙", title: "O Troco", desc: "A diferença entre o dinheiro entregue pelo cliente e o valor da compra." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: dados do produto\nlet produto = prompt("Digite o nome do produto: ");\nlet quantidade = Number(prompt("Digite a quantidade: "));\nlet preco = Number(prompt("Digite o valor do produto: "));\n\n// Processamento: calcula o valor total da compra\nlet totalCompra = preco * quantidade;\nconsole.log("O total da compra é: " + totalCompra);\n\n// Entrada de dados: valor pago pelo cliente\nlet valorPago = Number(prompt("Digite o valor pago: "));\n\n// Processamento: calcula o troco\nlet troco = valorPago - totalCompra;\n\n// Saída de dados: exibe valor pago e o troco\nconsole.log("O valor pago foi: " + valorPago);\nconsole.log("O troco é: " + troco);`,
+                        variables: [
+                            { id: "produto", label: "produto", defaultVal: "-" },
+                            { id: "quantidade", label: "quantidade", defaultVal: "-" },
+                            { id: "preco", label: "preco", defaultVal: "-" },
+                            { id: "totalCompra", label: "totalCompra", defaultVal: "-" },
+                            { id: "valorPago", label: "valorPago", defaultVal: "-" },
+                            { id: "troco", label: "troco", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo nome do produto ('Camiseta')", vars: { "produto": "'Camiseta'" }, console: { text: "Digite o nome do produto: Camiseta", isPrompt: true } },
+                            { line: 5, msg: "Lendo quantidade (3 itens)", vars: { "produto": "'Camiseta'", "quantidade": 3 }, console: { text: "Digite a quantidade: 3", isPrompt: true } },
+                            { line: 6, msg: "Lendo preço unitário (R$ 50)", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50 }, console: { text: "Digite o valor do produto: 50", isPrompt: true } },
+                            { line: 9, msg: "Calculando total: 50 * 3 = 150", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50, "totalCompra": 150 }, console: null },
+                            { line: 10, msg: "Exibindo total da compra", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50, "totalCompra": 150 }, console: { text: "O total da compra é: 150", isWarn: true } },
+                            { line: 13, msg: "Lendo valor pago (R$ 200)", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50, "totalCompra": 150, "valorPago": 200 }, console: { text: "Digite o valor pago: 200", isPrompt: true } },
+                            { line: 16, msg: "Calculando troco: 200 - 150 = 50", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50, "totalCompra": 150, "valorPago": 200, "troco": 50 }, console: null },
+                            { line: 19, msg: "Exibindo valor pago e troco", vars: { "produto": "'Camiseta'", "quantidade": 3, "preco": 50, "totalCompra": 150, "valorPago": 200, "troco": 50 }, console: { text: "O valor pago foi: 200\nO troco é: 50", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "green",
+                                tag: "Atenção ao Tipo de Dado",
+                                title: "1. Texto vs Número",
+                                code: 'let produto = prompt("Digite o nome do produto: ");',
+                                text: "Como o nome do produto é uma palavra ('Camiseta'), <strong>não usamos Number()</strong> aqui. O Number() só entra nos preços e quantidades!"
+                            }
+                        ],
+                        faq: [
+                            { q: "E se o troco der negativo?", a: "Significa que o cliente entregou menos dinheiro do que o total da compra." }
+                        ]
+                    },
+                    {
+                        id: "a1_desafio02",
+                        num: "⭐",
+                        session: "desafios",
+                        sessionName: "4. Desafios Comerciais",
+                        tabName: "⭐ Desafio: Salário",
+                        file: "Aula1/Desafio2.js",
+                        title: "Desafio 02 • Folha de Pagamento",
+                        subtitle: "Sessão: <strong>Desafios Comerciais</strong> • Salário bruto, deduções de porcentagens (8%, 11%, 5%) e salário líquido.",
+                        cardDesc: "Cálculo trabalhista com descontos de INSS e sindicato.",
+                        metaphors: [
+                            { icon: "💰", title: "Salário Bruto", desc: "O valor total que você ganharia antes de qualquer desconto oficial." },
+                            { icon: "🏛️", title: "INSS & Sindicato", desc: "Porcentagens legais retiradas para previdência (8%) e sindicato (5%)." },
+                            { icon: "💳", title: "Salário Líquido", desc: "O dinheiro real que entra no seu bolso no dia do pagamento." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: valor da hora e quantidade de horas trabalhadas\nlet valorHora = Number(prompt("Digite quanto você ganha por hora: "));\nlet horasTrabalhadas = Number(prompt("Digite o número de horas trabalhadas: "));\n\n// Processamento: calcula o salário bruto\nlet salarioBruto = horasTrabalhadas * valorHora;\n\n// Processamento: calcula as deduções (INSS, IR e Sindicato)\nlet inss = salarioBruto * 0.08;\nlet imposto = salarioBruto * 0.11;\nlet sindicato = salarioBruto * 0.05;\n\n// Processamento: calcula o salário líquido\nlet salarioLiquido = salarioBruto - inss - sindicato;\n\n// Saída de dados: exibe os resultados na tela\nconsole.log("salário bruto = " + salarioBruto);\nconsole.log("quanto pagou ao INSS? " + inss);\nconsole.log("quanto pagou ao sindicato? " + sindicato);\nconsole.log("o salário líquido é: " + salarioLiquido);`,
+                        variables: [
+                            { id: "valorHora", label: "valorHora", defaultVal: "-" },
+                            { id: "horasTrabalhadas", label: "horasTrabalhadas", defaultVal: "-" },
+                            { id: "salarioBruto", label: "salarioBruto", defaultVal: "-" },
+                            { id: "inss", label: "inss", defaultVal: "-" },
+                            { id: "sindicato", label: "sindicato", defaultVal: "-" },
+                            { id: "salarioLiquido", label: "salarioLiquido", defaultVal: "-" }
+                        ],
+                        steps: [
+                            { line: 4, msg: "Lendo valor por hora (R$ 25.00)", vars: { "valorHora": 25 }, console: { text: "Digite quanto você ganha por hora: 25", isPrompt: true } },
+                            { line: 5, msg: "Lendo horas trabalhadas (160h)", vars: { "valorHora": 25, "horasTrabalhadas": 160 }, console: { text: "Digite o número de horas trabalhadas: 160", isPrompt: true } },
+                            { line: 8, msg: "Calculando Salário Bruto: 160 * 25 = R$ 4000", vars: { "valorHora": 25, "horasTrabalhadas": 160, "salarioBruto": 4000 }, console: null },
+                            { line: 11, msg: "Calculando INSS (8%): 4000 * 0.08 = R$ 320", vars: { "valorHora": 25, "horasTrabalhadas": 160, "salarioBruto": 4000, "inss": 320 }, console: null },
+                            { line: 13, msg: "Calculando Sindicato (5%): 4000 * 0.05 = R$ 200", vars: { "valorHora": 25, "horasTrabalhadas": 160, "salarioBruto": 4000, "inss": 320, "sindicato": 200 }, console: null },
+                            { line: 16, msg: "Calculando Líquido: 4000 - 320 - 200 = R$ 3480", vars: { "valorHora": 25, "horasTrabalhadas": 160, "salarioBruto": 4000, "inss": 320, "sindicato": 200, "salarioLiquido": 3480 }, console: null },
+                            { line: 19, msg: "Exibindo relatório final", vars: { "valorHora": 25, "horasTrabalhadas": 160, "salarioBruto": 4000, "inss": 320, "sindicato": 200, "salarioLiquido": 3480 }, console: { text: "salário bruto = 4000\nquanto pagou ao INSS? 320\nquanto pagou ao sindicato? 200\no salário líquido é: 3480", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "amber",
+                                tag: "Cálculo de Porcentagens",
+                                title: "1. Como calcular porcentagem no código",
+                                code: "let inss = salarioBruto * 0.08;\nlet sindicato = salarioBruto * 0.05;",
+                                text: "Para calcular 8%, dividimos por 100 e multiplicamos por <strong>0.08</strong>. Para 5%, multiplicamos por <strong>0.05</strong>."
+                            }
+                        ],
+                        faq: [
+                            { q: "Por que não posso colocar 'salario * 8%'?", a: "O símbolo '%' em programação representa a operação de Resto da Divisão (módulo), e não porcentagem!" }
+                        ]
+                    }
+                ]
+            },
+            2: {
+                title: "Aula 2: Estruturas de Decisão (if / else)",
+                sessions: [
+                    { id: "all", name: "Todos (15)" },
+                    { id: "simples", name: "1. Decisão Simples" },
+                    { id: "composta", name: "2. Decisão Composta" },
+                    { id: "encadeada", name: "3. Decisão Encadeada" }
+                ],
+                exercises: [
+                    // DECISÃO SIMPLES
+                    {
+                        id: "a2_s01",
+                        num: "01",
+                        session: "simples",
+                        sessionName: "1. Decisão Simples",
+                        tabName: "01. Maior de Idade",
+                        file: "Aula2/Decisao_Simples/Exercicio01.js",
+                        title: "Exercício 01 • Maior ou Menor de Idade",
+                        subtitle: "Sessão: <strong>Decisão Simples</strong> • Avaliação booleana com <strong>if (idade >= 18)</strong>.",
+                        cardDesc: "Verifica se o usuário tem 18 anos ou mais.",
+                        metaphors: [
+                            { icon: "🚪", title: "O Porteiro (if)", desc: "Olha o documento de identidade. Se tiver 18 ou mais, abre a porta e dá passagem." },
+                            { icon: "🛡️", title: "A Condição (>= 18)", desc: "O teste de comparação matemática que responde apenas Verdadeiro ou Falso." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a idade do usuário\nlet idade = Number(prompt("Digite sua idade: "));\n\n// Processamento / Decisão: verifica se é maior ou menor de idade\nif (idade >= 18) {\n    console.log("Maior de idade");\n} else {\n    console.log("Menor de idade");\n}`,
+                        variables: [{ id: "idade", label: "idade", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo a idade (Ex: 20 anos)", vars: { "idade": 20 }, console: { text: "Digite sua idade: 20", isPrompt: true } },
+                            { line: 7, msg: "Testando condição: 20 >= 18 é VERDADEIRO (true)", vars: { "idade": 20 }, console: null },
+                            { line: 8, msg: "Entrando no bloco IF e exibindo mensagem", vars: { "idade": 20 }, console: { text: "Maior de idade", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "cyan",
+                                tag: "Estrutura Condicional",
+                                title: "1. Como o 'if' toma decisões",
+                                code: 'if (idade >= 18) {\n    console.log("Maior de idade");\n}',
+                                text: "O código dentro das chaves <code>{ ... }</code> só roda se o resultado da comparação for verdadeiro."
+                            }
+                        ],
+                        faq: [{ q: "O que é 'else'?", a: "É o caminho alternativo ('senão'). É executado quando o teste do 'if' dá falso." }]
+                    },
+                    {
+                        id: "a2_s02",
+                        num: "02",
+                        session: "simples",
+                        sessionName: "1. Decisão Simples",
+                        tabName: "02. Positivo/Negativo",
+                        file: "Aula2/Decisao_Simples/Exercicio02.js",
+                        title: "Exercício 02 • Número Positivo ou Negativo",
+                        subtitle: "Sessão: <strong>Decisão Simples</strong> • Verificação de sinal numérico com <strong>>= 0</strong>.",
+                        cardDesc: "Classifica se um número é maior/igual a zero ou negativo.",
+                        metaphors: [{ icon: "⚖️", title: "O Zero Central", desc: "O divisor da reta numérica. À direita é positivo, à esquerda é negativo." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita um número ao usuário\nlet numero = Number(prompt("Digite o número: "));\n\n// Processamento / Decisão: verifica se o número é positivo ou negativo\nif (numero >= 0) {\n    console.log("O número é positivo");\n} else {\n    console.log("O número é negativo");\n}`,
+                        variables: [{ id: "numero", label: "numero", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo número (Ex: -5)", vars: { "numero": -5 }, console: { text: "Digite o número: -5", isPrompt: true } },
+                            { line: 7, msg: "Testando: -5 >= 0 é FALSO ➔ Pula para ELSE", vars: { "numero": -5 }, console: null },
+                            { line: 10, msg: "Executando o bloco ELSE", vars: { "numero": -5 }, console: { text: "O número é negativo", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "Operador de Comparação", title: "1. O operador >=", code: "if (numero >= 0)", text: "Significa 'Maior ou Igual a Zero'." }],
+                        faq: [{ q: "O zero é positivo?", a: "Nesta lógica, consideramos >= 0 como positivo." }]
+                    },
+                    {
+                        id: "a2_s03",
+                        num: "03",
+                        session: "simples",
+                        sessionName: "1. Decisão Simples",
+                        tabName: "03. Média Escolar",
+                        file: "Aula2/Decisao_Simples/Exercicio03.js",
+                        title: "Exercício 03 • Média e Aprovação",
+                        subtitle: "Sessão: <strong>Decisão Simples</strong> • Teste de nota de corte com <strong>if (media < 7)</strong>.",
+                        cardDesc: "Verifica se o aluno atingiu média mínima 7.0 para aprovação.",
+                        metaphors: [{ icon: "🎓", title: "A Nota de Corte", desc: "7.0 é a linha de chegada. Se atingir ou passar, comemora a aprovação!" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a média do aluno\nlet media = Number(prompt("Digite a média: "));\n\n// Processamento / Decisão: verifica se o aluno foi aprovado ou reprovado\nif (media < 7) {\n    console.log("Aluno reprovado");\n} else {\n    console.log("Aluno aprovado");\n}`,
+                        variables: [{ id: "media", label: "media", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo média (Ex: 8.5)", vars: { "media": 8.5 }, console: { text: "Digite a média: 8.5", isPrompt: true } },
+                            { line: 7, msg: "Testando 8.5 < 7 (FALSO) ➔ Vai para o ELSE", vars: { "media": 8.5 }, console: null },
+                            { line: 10, msg: "Executando ELSE: Aluno aprovado!", vars: { "media": 8.5 }, console: { text: "Aluno aprovado", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "green", tag: "Condição Invertida", title: "1. Testando a Reprovação Primeiro", code: "if (media < 7)", text: "Se for menor que 7, reprova; senão, aprova." }],
+                        faq: [{ q: "Poderia ser if (media >= 7)?", a: "Sim! Apenas inverteria a ordem das mensagens." }]
+                    },
+                    {
+                        id: "a2_s04",
+                        num: "04",
+                        session: "simples",
+                        sessionName: "1. Decisão Simples",
+                        tabName: "04. Validação Letra Z",
+                        file: "Aula2/Decisao_Simples/Exercicio04.js",
+                        title: "Exercício 04 • Verificação de Letra 'Z'",
+                        subtitle: "Sessão: <strong>Decisão Simples</strong> • Comparação de caracteres e <strong>.toUpperCase()</strong>.",
+                        cardDesc: "Compara se o caractere digitado é a letra Z maiúscula ou minúscula.",
+                        metaphors: [{ icon: "🔤", title: "A Letra Secreta", desc: "Compara se a tecla pressionada foi a letra Z." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita uma letra ao usuário\nlet letra = prompt("Digite uma letra: ");\n\n// Processamento: verifica se a letra digitada é "Z" (ou "z")\nlet correto = (letra.toUpperCase() === "Z");\n\n// Decisão e Saída de dados\nif (correto) {\n    console.log("Letra Correta!");\n} else {\n    console.log("Letra incorreta!");\n}`,
+                        variables: [{ id: "letra", label: "letra", defaultVal: "-" }, { id: "correto", label: "correto", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo letra digitada ('z')", vars: { "letra": "'z'" }, console: { text: "Digite uma letra: z", isPrompt: true } },
+                            { line: 7, msg: "Transformando em maiúscula: 'z' ➔ 'Z' === 'Z' (true)", vars: { "letra": "'z'", "correto": true }, console: null },
+                            { line: 10, msg: "Exibindo mensagem de sucesso!", vars: { "letra": "'z'", "correto": true }, console: { text: "Letra Correta!", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Manipulação de Texto", title: "1. .toUpperCase()", code: 'letra.toUpperCase() === "Z"', text: "Garante que tanto 'z' quanto 'Z' sejam aceitos." }],
+                        faq: [{ q: "O que faz o toUpperCase()?", a: "Converte o texto para letras maiúsculas." }]
+                    },
+                    {
+                        id: "a2_s05",
+                        num: "⭐",
+                        session: "simples",
+                        sessionName: "1. Decisão Simples",
+                        tabName: "⭐ Desafio: Empréstimo",
+                        file: "Aula2/Decisao_Simples/Desafio_Emprestimo.js",
+                        title: "Desafio • Análise de Crédito Bancário",
+                        subtitle: "Sessão: <strong>Decisão Simples</strong> • Idade, Salário, Score e Limite Máximo de Empréstimo.",
+                        cardDesc: "Sistema bancário de aprovação de crédito com múltiplos critérios.",
+                        metaphors: [{ icon: "🏦", title: "O Gerente do Banco", desc: "Avalia idade (>=18), renda mínima (>=1500) e score de crédito (>=400)." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a idade do cliente\nlet idade = Number(prompt("Digite a sua idade: "));\n\nif (idade < 18) {\n    console.log("Empréstimo negado: menor de idade.");\n} else {\n    let salario = Number(prompt("Digite o seu salário mensal (R$): "));\n    if (salario < 1500) {\n        console.log("Empréstimo negado: salário insuficiente.");\n    } else {\n        let score = Number(prompt("Digite o seu score de crédito (0 a 1000): "));\n        if (score < 400) {\n            console.log("Empréstimo negado: score insuficiente.");\n        } else {\n            let valorSolicitado = Number(prompt("Digite o valor do empréstimo solicitado (R$): "));\n            let limiteSalario = (salario <= 3000) ? 5000 : 15000;\n            let limiteScore = (score <= 699) ? 5000 : 15000;\n            let limiteFinal = Math.min(limiteSalario, limiteScore);\n            if (valorSolicitado > limiteFinal) {\n                console.log("Empréstimo negado: valor solicitado acima do limite (R$ " + limiteFinal + ").");\n            } else {\n                console.log("Empréstimo aprovado com sucesso!");\n            }\n        }\n    }\n}`,
+                        variables: [{ id: "idade", label: "idade", defaultVal: "-" }, { id: "salario", label: "salario", defaultVal: "-" }, { id: "score", label: "score", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo idade: 25 anos", vars: { "idade": 25 }, console: { text: "Digite a sua idade: 25", isPrompt: true } },
+                            { line: 8, msg: "Lendo salário: R$ 3500", vars: { "idade": 25, "salario": 3500 }, console: { text: "Digite o seu salário: 3500", isPrompt: true } },
+                            { line: 12, msg: "Lendo score: 750 pts", vars: { "idade": 25, "salario": 3500, "score": 750 }, console: { text: "Digite o score: 750", isPrompt: true } },
+                            { line: 20, msg: "Calculando limite: R$ 15.000 ➔ Aprovado!", vars: { "idade": 25, "salario": 3500, "score": 750 }, console: { text: "Empréstimo aprovado com sucesso!", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "purple", tag: "Validações Consecutivas", title: "1. Critérios em Cascata", code: "if (idade < 18) { ... } else { ... }", text: "Garante que o cliente cumpra todas as exigências financeiras antes de liberar o dinheiro." }],
+                        faq: [{ q: "O que faz o Math.min?", a: "Retorna o menor valor entre dois números para adotar o limite mais seguro." }]
+                    },
+
+                    // DECISÃO COMPOSTA (Operadores Lógicos && e ||)
+                    {
+                        id: "a2_c01",
+                        num: "01",
+                        session: "composta",
+                        sessionName: "2. Decisão Composta",
+                        tabName: "01. Entrada no Parque",
+                        file: "Aula2/Decisao_Composta/Exercicio01.js",
+                        title: "Exercício 01 • Entrada no Parque (Operador &&)",
+                        subtitle: "Sessão: <strong>Decisão Composta</strong> • Validação dupla com <strong>idade >= 18 && possuiIngresso</strong>.",
+                        cardDesc: "Exige ter 18 anos E possuir ingresso simultaneamente.",
+                        metaphors: [{ icon: "🎡", title: "A Catraca do Parque", desc: "Precisa de DUAS chaves juntas: ser maior de idade E estar com o bilhete na mão." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: idade e posse do ingresso\nlet idade = Number(prompt("Digite a idade da pessoa: "));\nlet ingresso = prompt("Possui ingresso? (Sim/Não): ");\n\n// Processamento: normaliza a resposta do ingresso para booleano\nlet possuiIngresso = (ingresso.toLowerCase() === "sim");\n\n// Processamento / Decisão: verifica se tem 18 anos ou mais E se tem ingresso\nif (idade >= 18 && possuiIngresso) {\n    console.log("Entrada permitida");\n} else {\n    console.log("Entrada negada");\n}`,
+                        variables: [{ id: "idade", label: "idade", defaultVal: "-" }, { id: "possuiIngresso", label: "possuiIngresso", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo idade: 20 anos", vars: { "idade": 20 }, console: { text: "Digite a idade: 20", isPrompt: true } },
+                            { line: 5, msg: "Lendo ingresso: 'Sim'", vars: { "idade": 20, "possuiIngresso": true }, console: { text: "Possui ingresso? Sim", isPrompt: true } },
+                            { line: 11, msg: "Testando (20 >= 18 && true) ➔ VERDADEIRO", vars: { "idade": 20, "possuiIngresso": true }, console: { text: "Entrada permitida", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Operador E (&&)", title: "1. As duas condições devem ser verdadeiras", code: "if (idade >= 18 && possuiIngresso)", text: "Com o operador <code>&&</code>, basta UMA ser falsa para reprovar." }],
+                        faq: [{ q: "O que acontece se tiver 20 anos mas não tiver ingresso?", a: "A condição && falha e a entrada é negada." }]
+                    },
+                    {
+                        id: "a2_c02",
+                        num: "02",
+                        session: "composta",
+                        sessionName: "2. Decisão Composta",
+                        tabName: "02. Desconto Compra/VIP",
+                        file: "Aula2/Decisao_Composta/Exercicio02.js",
+                        title: "Exercício 02 • Desconto por Valor ou VIP (Operador ||)",
+                        subtitle: "Sessão: <strong>Decisão Composta</strong> • Uso do operador OU: <strong>valor > 200 || isVIP</strong>.",
+                        cardDesc: "Dá desconto se a compra for > 200 OU se o cliente for membro VIP.",
+                        metaphors: [{ icon: "🏷️", title: "O Cupom Flexível", desc: "Basta cumprir UM dos requisitos: ou gastar muito, ou ser cliente VIP." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: valor da compra e status VIP\nlet valorCompra = Number(prompt("Digite o valor da compra (R$): "));\nlet clienteVIP = prompt("Cliente é VIP? (Sim/Não): ");\n\n// Processamento: verifica se é VIP\nlet isVIP = (clienteVIP.toLowerCase() === "sim");\n\n// Processamento / Decisão: desconto é concedido se compra > 200 OU cliente for VIP\nlet recebeDesconto = (valorCompra > 200 || isVIP);\n\n// Saída de dados\nif (recebeDesconto) {\n    console.log("Cliente recebe desconto");\n} else {\n    console.log("Cliente não recebe desconto");\n}`,
+                        variables: [{ id: "valorCompra", label: "valorCompra", defaultVal: "-" }, { id: "isVIP", label: "isVIP", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo valor: R$ 250.00", vars: { "valorCompra": 250 }, console: { text: "Digite o valor da compra: 250", isPrompt: true } },
+                            { line: 5, msg: "Lendo VIP: 'Não'", vars: { "valorCompra": 250, "isVIP": false }, console: { text: "Cliente é VIP? Não", isPrompt: true } },
+                            { line: 11, msg: "Testando (250 > 200 || false) ➔ VERDADEIRO", vars: { "valorCompra": 250, "isVIP": false }, console: { text: "Cliente recebe desconto", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "Operador OU (||)", title: "1. Qualquer condição verdadeira é suficiente", code: "valorCompra > 200 || isVIP", text: "O operador <code>||</code> precisa de apenas UM lado verdadeiro para aprovar." }],
+                        faq: [{ q: "E se gastar R$ 50 e for VIP?", a: "Recebe desconto, pois a condição de ser VIP é verdadeira." }]
+                    },
+                    {
+                        id: "a2_c03",
+                        num: "03",
+                        session: "composta",
+                        sessionName: "2. Decisão Composta",
+                        tabName: "03. Média e Frequência",
+                        file: "Aula2/Decisao_Composta/Exercicio03.js",
+                        title: "Exercício 03 • Média de 3 Notas e Frequência",
+                        subtitle: "Sessão: <strong>Decisão Composta</strong> • Aprovação com <strong>media >= 6.0 || frequencia >= 75</strong>.",
+                        cardDesc: "Calcula média de 3 avaliações e checa percentual de presença.",
+                        metaphors: [{ icon: "📊", title: "Boletim Escolar", desc: "Calcula a média das três provas e compara com os critérios de presença." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: 3 notas e percentual de frequência\nlet nota1 = Number(prompt("Digite a primeira nota: "));\nlet nota2 = Number(prompt("Digite a segunda nota: "));\nlet nota3 = Number(prompt("Digite a terceira nota: "));\nlet frequencia = Number(prompt("Digite o percentual de frequência (%): "));\n\n// Processamento: calcula a média aritmética das 3 notas\nlet media = (nota1 + nota2 + nota3) / 3;\n\n// Processamento / Decisão: critério de aprovação (nota >= 6.0 ou frequência >= 75)\nlet aprovado = (media >= 6.0 || frequencia >= 75);\n\n// Saída de dados\nconsole.log("Média final: " + media.toFixed(2));\nif (aprovado) {\n    console.log("Aluno aprovado");\n} else {\n    console.log("Aluno reprovado");\n}`,
+                        variables: [{ id: "media", label: "media", defaultVal: "-" }, { id: "frequencia", label: "frequencia", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo as 3 notas (7.0, 6.0, 8.0)", vars: { "media": 7.0, "frequencia": 80 }, console: { text: "Notas registradas!", isPrompt: true } },
+                            { line: 10, msg: "Média calculada: 7.00 | Freq: 80%", vars: { "media": 7.0, "frequencia": 80 }, console: { text: "Média final: 7.00\nAluno aprovado", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "green", tag: "Cálculo e Decisão", title: "1. Média de 3 Notas", code: "let media = (nota1 + nota2 + nota3) / 3;", text: "Soma as 3 notas entre parênteses e divide por 3." }],
+                        faq: [{ q: "Por que usar .toFixed(2)?", a: "Para formatar a média com duas casas decimais (ex: 7.33)." }]
+                    },
+                    {
+                        id: "a2_c04",
+                        num: "04",
+                        session: "composta",
+                        sessionName: "2. Decisão Composta",
+                        tabName: "04. Permissão para Dirigir",
+                        file: "Aula2/Decisao_Composta/Exercicio04.js",
+                        title: "Exercício 04 • Permissão para Dirigir",
+                        subtitle: "Sessão: <strong>Decisão Composta</strong> • Operadores combinados: <strong>idade >= 18 && (possuiCNH || comInstrutor)</strong>.",
+                        cardDesc: "Verifica idade e habilitação ou presença de instrutor.",
+                        metaphors: [{ icon: "🚗", title: "Na Autoescola", desc: "Pode dirigir se for maior de 18 E (tiver CNH OU estiver com instrutor ao lado)." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: idade, carteira de motorista e instrutor\nlet idade = Number(prompt("Digite a idade da pessoa: "));\nlet temCarteira = prompt("Possui carteira de motorista? (Sim/Não): ");\nlet acompanhaInstrutor = prompt("Está acompanhada por um instrutor habilitado? (Sim/Não): ");\n\n// Processamento: conversão das respostas para booleanos\nlet possuiCNH = (temCarteira.toLowerCase() === "sim");\nlet comInstrutor = (acompanhaInstrutor.toLowerCase() === "sim");\n\n// Decisão: para dirigir precisa ser maior de idade E (ter carteira OU estar com instrutor)\nlet podeDirigir = (idade >= 18 && (possuiCNH || comInstrutor));\n\n// Saída de dados\nif (podeDirigir) {\n    console.log("Pode dirigir");\n} else {\n    console.log("Não pode dirigir");\n}`,
+                        variables: [{ id: "idade", label: "idade", defaultVal: "-" }, { id: "possuiCNH", label: "possuiCNH", defaultVal: "-" }, { id: "comInstrutor", label: "comInstrutor", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo dados do motorista", vars: { "idade": 19, "possuiCNH": false, "comInstrutor": true }, console: { text: "Idade: 19 | CNH: Não | Instrutor: Sim", isPrompt: true } },
+                            { line: 12, msg: "19 >= 18 && (false || true) ➔ VERDADEIRO", vars: { "idade": 19, "possuiCNH": false, "comInstrutor": true }, console: { text: "Pode dirigir", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "purple", tag: "Agrupamento com Parênteses", title: "1. Combinando && e ||", code: "idade >= 18 && (possuiCNH || comInstrutor)", text: "Os parênteses garantem que o teste de carteira ou instrutor seja resolvido antes do &&." }],
+                        faq: [{ q: "Um menor de 17 anos com instrutor pode?", a: "Não, pois idade >= 18 será falso!" }]
+                    },
+                    {
+                        id: "a2_c05",
+                        num: "05",
+                        session: "composta",
+                        sessionName: "2. Decisão Composta",
+                        tabName: "05. Verificação de Vogal",
+                        file: "Aula2/Decisao_Composta/Exercicio05.js",
+                        title: "Exercício 05 • Verificação de Vogal (A, E, I, O, U)",
+                        subtitle: "Sessão: <strong>Decisão Composta</strong> • Encadeamento de múltiplos <strong>||</strong> para checar vogais.",
+                        cardDesc: "Compara se a letra é 'a' || 'e' || 'i' || 'o' || 'u'.",
+                        metaphors: [{ icon: "🔡", title: "O Alfabeto", desc: "Se for uma das 5 vogais especiais, acende a luz verde!" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita uma letra\nlet letra = prompt("Digite uma letra: ");\n\n// Processamento: verifica se o caractere digitado é uma vogal\nlet l = letra.toLowerCase();\nlet vogal = (l === "a" || l === "e" || l === "i" || l === "o" || l === "u");\n\n// Saída de dados\nif (vogal) {\n    console.log("Vogal");\n} else {\n    console.log("Não é vogal");\n}`,
+                        variables: [{ id: "letra", label: "letra", defaultVal: "-" }, { id: "vogal", label: "vogal", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo letra: 'E'", vars: { "letra": "'E'", "vogal": true }, console: { text: "Digite uma letra: E", isPrompt: true } },
+                            { line: 10, msg: "Classificando como Vogal!", vars: { "letra": "'E'", "vogal": true }, console: { text: "Vogal", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Múltiplos OU", title: "1. Comparando com as 5 vogais", code: 'l === "a" || l === "e" || l === "i" || l === "o" || l === "u"', text: "Se for igual a qualquer uma das cinco, a resposta é verdadeira." }],
+                        faq: [{ q: "E se digitar maiúscula?", a: "O .toLowerCase() transforma 'A' em 'a' antes de comparar." }]
+                    },
+
+                    // DECISÃO ENCADEADA (if / else if / else)
+                    {
+                        id: "a2_e01",
+                        num: "01",
+                        session: "encadeada",
+                        sessionName: "3. Decisão Encadeada",
+                        tabName: "01. Faixa Etária",
+                        file: "Aula2/Decisao_Encadeada/Exercicio01.js",
+                        title: "Exercício 01 • Classificação por Idade",
+                        subtitle: "Sessão: <strong>Decisão Encadeada</strong> • Criança (<12), Adolescente (12 a 17) ou Adulto (>=18).",
+                        cardDesc: "Classifica em três categorias etárias.",
+                        metaphors: [{ icon: "🧒", title: "As Fases da Vida", desc: "Degraus de idade: Criança ➔ Adolescente ➔ Adulto." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a idade\nlet idade = Number(prompt("Digite a sua idade: "));\n\n// Processamento / Decisão encadeada por faixa etária\nif (idade < 12) {\n    console.log("Criança");\n} else if (idade <= 17) {\n    console.log("Adolescente");\n} else {\n    console.log("Adulta");\n}`,
+                        variables: [{ id: "idade", label: "idade", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo idade: 15 anos", vars: { "idade": 15 }, console: { text: "Digite a sua idade: 15", isPrompt: true } },
+                            { line: 7, msg: "15 < 12 (Falso) ➔ Testa 'else if (idade <= 17)' (Verdadeiro!)", vars: { "idade": 15 }, console: null },
+                            { line: 10, msg: "Classificação: Adolescente", vars: { "idade": 15 }, console: { text: "Adolescente", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "else if", title: "1. Encadeamento", code: "if (idade < 12) { ... } else if (idade <= 17) { ... }", text: "Permite testar múltiplas faixas em ordem lógica." }],
+                        faq: [{ q: "Precisa testar idade >= 12 no else if?", a: "Não, pois se passou do primeiro if, ela com certeza já tem 12 ou mais!" }]
+                    },
+                    {
+                        id: "a2_e02",
+                        num: "02",
+                        session: "encadeada",
+                        sessionName: "3. Decisão Encadeada",
+                        tabName: "02. Clima & Temperatura",
+                        file: "Aula2/Decisao_Encadeada/Exercicio02.js",
+                        title: "Exercício 02 • Sensação Térmica do Clima",
+                        subtitle: "Sessão: <strong>Decisão Encadeada</strong> • >30°C (Quente), 20 a 30°C (Agradável) ou <20°C (Frio).",
+                        cardDesc: "Classifica o clima de acordo com a temperatura em graus Celsius.",
+                        metaphors: [{ icon: "🌡️", title: "O Termômetro", desc: "Quente 🔥 | Agradável 🌤️ | Frio ❄️" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a temperatura em Celsius\nlet temperatura = Number(prompt("Digite a temperatura em graus Celsius: "));\n\n// Processamento / Decisão encadeada da sensação térmica\nif (temperatura > 30) {\n    console.log("Está quente");\n} else if (temperatura >= 20) {\n    console.log("O clima está agradável");\n} else {\n    console.log("Está frio");\n}`,
+                        variables: [{ id: "temperatura", label: "temperatura", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo temperatura: 24°C", vars: { "temperatura": 24 }, console: { text: "Digite a temperatura: 24", isPrompt: true } },
+                            { line: 9, msg: "Classificação: O clima está agradável!", vars: { "temperatura": 24 }, console: { text: "O clima está agradável", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Classificação de Intervalos", title: "1. Faixas de Temperatura", code: "if (temperatura > 30) ... else if (temperatura >= 20)", text: "Separa as 3 faixas climáticas." }],
+                        faq: [{ q: "Exatamente 30°C cai em qual faixa?", a: "Cai em 'Agradável', pois 30 >= 20 é verdadeiro." }]
+                    },
+                    {
+                        id: "a2_e03",
+                        num: "03",
+                        session: "encadeada",
+                        sessionName: "3. Decisão Encadeada",
+                        tabName: "03. Conceito Escolar",
+                        file: "Aula2/Decisao_Encadeada/Exercicio03.js",
+                        title: "Exercício 03 • Desempenho Escolar por Nota",
+                        subtitle: "Sessão: <strong>Decisão Encadeada</strong> • Excelente (>=9), Bom (>=7), Regular (>=6) ou Reprovado (<6).",
+                        cardDesc: "Classifica o conceito do aluno em 4 níveis.",
+                        metaphors: [{ icon: "🏆", title: "O Pódio de Notas", desc: "Excelente 🏆 | Bom ⭐ | Regular ⚠️ | Reprovado ❌" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita a nota do aluno\nlet nota = Number(prompt("Digite a nota do aluno: "));\n\n// Processamento / Decisão encadeada do desempenho\nif (nota >= 9) {\n    console.log("Excelente");\n} else if (nota >= 7) {\n    console.log("Bom");\n} else if (nota >= 6) {\n    console.log("Regular");\n} else {\n    console.log("Reprovado");\n}`,
+                        variables: [{ id: "nota", label: "nota", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo nota: 8.5", vars: { "nota": 8.5 }, console: { text: "Digite a nota: 8.5", isPrompt: true } },
+                            { line: 9, msg: "Nota >= 7 ➔ Conceito: Bom!", vars: { "nota": 8.5 }, console: { text: "Bom", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "green", tag: "Conceitos Múltiplos", title: "1. 4 Níveis com if / else if", code: "if (nota >= 9) ... else if (nota >= 7) ...", text: "Organização decrescente de notas." }],
+                        faq: [{ q: "Por que testar do maior para o menor?", a: "Para garantir que uma nota 9.5 caia em 'Excelente' e não pare em 'Bom'." }]
+                    },
+                    {
+                        id: "a2_e04",
+                        num: "04",
+                        session: "encadeada",
+                        sessionName: "3. Decisão Encadeada",
+                        tabName: "04. Desconto Progressivo",
+                        file: "Aula2/Decisao_Encadeada/Exercicio04.js",
+                        title: "Exercício 04 • Desconto Progressivo por Valor",
+                        subtitle: "Sessão: <strong>Decisão Encadeada</strong> • >500 (20%), >200 (10%), >100 (5%), até 100 (0%).",
+                        cardDesc: "Calcula a alíquota e o valor economizado na compra.",
+                        metaphors: [{ icon: "💰", title: "Quem Compra Mais Paga Menos", desc: "Quanto maior o carrinho de compras, maior o percentual de desconto!" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita o valor total da compra\nlet valorCompra = Number(prompt("Digite o valor da compra (R$): "));\n\n// Processamento: determina a porcentagem de desconto com base na faixa de valor\nlet percentualDesconto = 0;\n\nif (valorCompra > 500) {\n    percentualDesconto = 20;\n} else if (valorCompra > 200) {\n    percentualDesconto = 10;\n} else if (valorCompra > 100) {\n    percentualDesconto = 5;\n} else {\n    percentualDesconto = 0;\n}\n\n// Cálculos do desconto e do valor a pagar\nlet valorDesconto = (valorCompra * percentualDesconto) / 100;\nlet valorFinal = valorCompra - valorDesconto;\n\n// Saída de dados\nconsole.log("Percentual de desconto (%): " + percentualDesconto + "%");\nconsole.log("Valor do desconto (R$): " + valorDesconto.toFixed(2));\nconsole.log("Valor final com desconto (R$): " + valorFinal.toFixed(2));`,
+                        variables: [{ id: "valorCompra", label: "valorCompra", defaultVal: "-" }, { id: "percentualDesconto", label: "% Desconto", defaultVal: "-" }, { id: "valorFinal", label: "valorFinal", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo compra: R$ 350.00", vars: { "valorCompra": 350, "percentualDesconto": 10, "valorFinal": 315 }, console: { text: "Valor: R$ 350.00", isPrompt: true } },
+                            { line: 20, msg: "Desconto 10% (-R$ 35.00) ➔ Total: R$ 315.00", vars: { "valorCompra": 350, "percentualDesconto": 10, "valorFinal": 315 }, console: { text: "Valor final com desconto: R$ 315.00", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "Cálculo de Desconto", title: "1. (valor * pct) / 100", code: "let valorDesconto = (valorCompra * percentualDesconto) / 100;", text: "Aplica a porcentagem definida na condição encadeada." }],
+                        faq: [{ q: "Para uma compra de R$ 600?", a: "Cai no primeiro if com 20% de desconto." }]
+                    },
+                    {
+                        id: "a2_e05",
+                        num: "05",
+                        session: "encadeada",
+                        sessionName: "3. Decisão Encadeada",
+                        tabName: "05. Imposto de Renda",
+                        file: "Aula2/Decisao_Encadeada/Exercicio05.js",
+                        title: "Exercício 05 • Cálculo de Imposto de Renda (IRRF)",
+                        subtitle: "Sessão: <strong>Decisão Encadeada</strong> • Faixas de tributação: <=2000 (0%), <=3500 (10%), <=5000 (15%), >5000 (20%).",
+                        cardDesc: "Calcula a retenção de imposto e salário líquido.",
+                        metaphors: [{ icon: "🏛️", title: "A Tabela do Leão", desc: "Salários até R$ 2.000 são isentos (0%); salários maiores pagam alíquotas crescentes." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita o salário do funcionário\nlet salario = Number(prompt("Digite o salário do funcionário (R$): "));\n\n// Processamento: determina a alíquota do Imposto de Renda pela faixa salarial\nlet aliquota = 0;\n\nif (salario <= 2000) {\n    aliquota = 0;\n} else if (salario <= 3500) {\n    aliquota = 10;\n} else if (salario <= 5000) {\n    aliquota = 15;\n} else {\n    aliquota = 20;\n}\n\n// Cálculos do imposto e salário líquido\nlet valorImposto = (salario * aliquota) / 100;\nlet salarioLiquido = salario - valorImposto;\n\n// Saída de dados\nconsole.log("Salário informado (R$): " + salario.toFixed(2));\nconsole.log("Alíquota de imposto: " + aliquota + "%");\nconsole.log("Valor do imposto retido (R$): " + valorImposto.toFixed(2));\nconsole.log("Salário líquido após o desconto (R$): " + salarioLiquido.toFixed(2));`,
+                        variables: [{ id: "salario", label: "salario", defaultVal: "-" }, { id: "aliquota", label: "aliquota", defaultVal: "-" }, { id: "salarioLiquido", label: "salarioLiquido", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo salário: R$ 4200.00", vars: { "salario": 4200, "aliquota": 15, "salarioLiquido": 3570 }, console: { text: "Salário: R$ 4200.00", isPrompt: true } },
+                            { line: 20, msg: "Alíquota 15% (-R$ 630.00) ➔ Líquido: R$ 3570.00", vars: { "salario": 4200, "aliquota": 15, "salarioLiquido": 3570 }, console: { text: "Salário líquido: R$ 3570.00", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "purple", tag: "Tributação Progressiva", title: "1. Alíquotas por Faixa", code: "if (salario <= 2000) ... else if (salario <= 3500) ...", text: "Classifica a faixa de contribuição fiscal do trabalhador." }],
+                        faq: [{ q: "O que é alíquota?", a: "É o percentual cobrado sobre o rendimento bruto." }]
+                    }
+                ]
+            },
+            3: {
+                title: "Aula 3: Repetição & Vetores (Laços e Arrays)",
+                sessions: [
+                    { id: "all", name: "Todos (24)" },
+                    { id: "para", name: "1. Laço Para (for)" },
+                    { id: "enquanto", name: "2. Enquanto (while)" },
+                    { id: "faca", name: "3. Faça-Enquanto (do-while)" },
+                    { id: "arrays", name: "4. Vetores (Arrays)" }
+                ],
+                exercises: [
+                    // LAÇO PARA (FOR)
+                    {
+                        id: "a3_p01",
+                        num: "01",
+                        session: "para",
+                        sessionName: "1. Laço Para (for)",
+                        tabName: "01. Contagem 1 a 10",
+                        file: "Aula3/Para/Exercicio01.js",
+                        title: "Exercício 01 • Contagem de 1 até 10 com For",
+                        subtitle: "Sessão: <strong>Laço Para (for)</strong> • Incremento com <strong>i++</strong>.",
+                        cardDesc: "Conta e exibe números de 1 até 10.",
+                        metaphors: [{ icon: "🤖", title: "O Robô Contador", desc: "Repete a instrução de contar de 1 em 1 até bater a meta de 10." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Laço de repetição PARA: conta e exibe os números de 1 até 10\nconsole.log("Contagem de 1 a 10:");\nfor (let i = 1; i <= 10; i++) {\n    console.log(i);\n}`,
+                        variables: [{ id: "i", label: "Contador i", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Iniciando for (let i = 1; i <= 10; i++)", vars: { "i": 1 }, console: { text: "Contagem de 1 a 10:\n1\n2\n3\n...\n10", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Estrutura do For", title: "1. As 3 partes do For", code: "for (let i = 1; i <= 10; i++)", text: "1º Início (let i = 1); 2º Condição (i <= 10); 3º Passo a cada volta (i++)." }],
+                        faq: [{ q: "O que é i++?", a: "É o mesmo que i = i + 1." }]
+                    },
+                    {
+                        id: "a3_p02",
+                        num: "02",
+                        session: "para",
+                        sessionName: "1. Laço Para (for)",
+                        tabName: "02. Decrescente 100 a 1",
+                        file: "Aula3/Para/Exercicio02.js",
+                        title: "Exercício 02 • Contagem Decrescente 100 até 1",
+                        subtitle: "Sessão: <strong>Laço Para (for)</strong> • Decremento com <strong>i--</strong>.",
+                        cardDesc: "Conta de trás para frente de 100 até 1.",
+                        metaphors: [{ icon: "🚀", title: "Contagem Regressiva", desc: "Começa no 100 e vai tirando 1 a cada volta até chegar no 1." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Laço de repetição PARA: conta e exibe os números de 100 até 1 em ordem decrescente\nconsole.log("Contagem decrescente de 100 a 1:");\nfor (let i = 100; i >= 1; i--) {\n    console.log(i);\n}`,
+                        variables: [{ id: "i", label: "Contador i", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Iniciando laço: i = 100 até 1 com i--", vars: { "i": 100 }, console: { text: "100\n99\n98\n...\n1", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "Decremento", title: "1. i-- no laço", code: "for (let i = 100; i >= 1; i--)", text: "Subtrai 1 unidade por ciclo." }],
+                        faq: [{ q: "Qual a condição de parada?", a: "i >= 1 (quando i virar 0, o loop para)." }]
+                    },
+                    {
+                        id: "a3_p03",
+                        num: "03",
+                        session: "para",
+                        sessionName: "1. Laço Para (for)",
+                        tabName: "03. Pares 0 a 20",
+                        file: "Aula3/Para/Exercicio03.js",
+                        title: "Exercício 03 • Números Pares de 0 até 20 (Passo 2)",
+                        subtitle: "Sessão: <strong>Laço Para (for)</strong> • Avançando de 2 em 2 com <strong>i += 2</strong>.",
+                        cardDesc: "Gera números pares pulando de dois em dois.",
+                        metaphors: [{ icon: "🐇", title: "O Salto Duplo", desc: "Pula de 2 em 2: 0, 2, 4, 6, 8, ..., 20." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Laço de repetição PARA: exibe números pares de 0 até 20 avançando de 2 em 2\nconsole.log("Números pares de 0 até 20:");\nfor (let i = 0; i <= 20; i += 2) {\n    console.log(i);\n}`,
+                        variables: [{ id: "i", label: "Contador i", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Executando loop com passo i += 2", vars: { "i": 20 }, console: { text: "0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "green", tag: "Passo Personalizado", title: "1. i += 2", code: "for (let i = 0; i <= 20; i += 2)", text: "Soma 2 a cada volta em vez de 1." }],
+                        faq: [{ q: "Precisa de if (i % 2 === 0)?", a: "Não, pois o próprio passo de 2 em 2 já garante apenas pares!" }]
+                    },
+                    {
+                        id: "a3_p04",
+                        num: "04",
+                        session: "para",
+                        sessionName: "1. Laço Para (for)",
+                        tabName: "04. Tabuada Completa",
+                        file: "Aula3/Para/Exercicio04.js",
+                        title: "Exercício 04 • Tabuada de Multiplicação (1 a 10)",
+                        subtitle: "Sessão: <strong>Laço Para (for)</strong> • Multiplica o número de 1 até 10.",
+                        cardDesc: "Calcula a tabuada completa de qualquer número.",
+                        metaphors: [{ icon: "✖️", title: "A Tabuada Automática", desc: "Calcula N × 1, N × 2, ..., N × 10 em fração de segundos." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: solicita o número para gerar a tabuada\nlet numero = Number(prompt("Digite um número para ver a sua tabuada: "));\n\n// Processamento e Saída: laço PARA de 1 até 10 calculando cada multiplicação\nconsole.log("\\n--- Tabuada do " + numero + " ---");\nfor (let i = 1; i <= 10; i++) {\n    let resultado = numero * i;\n    console.log(numero + " x " + i + " = " + resultado);\n}`,
+                        variables: [{ id: "numero", label: "numero", defaultVal: "-" }, { id: "i", label: "i", defaultVal: "-" }, { id: "resultado", label: "resultado", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Lendo número: 7", vars: { "numero": 7, "i": 10, "resultado": 70 }, console: { text: "--- Tabuada do 7 ---\n7 x 1 = 7\n7 x 2 = 14\n...\n7 x 10 = 70", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "purple", tag: "Multiplicação Acumulada", title: "1. numero * i", code: "let resultado = numero * i;", text: "Multiplica o número pelo contador da iteração atual." }],
+                        faq: [{ q: "Quantas voltas o loop dá?", a: "Exatamente 10 voltas (de 1 até 10)." }]
+                    },
+
+                    // LAÇO ENQUANTO (WHILE)
+                    {
+                        id: "a3_w01",
+                        num: "01",
+                        session: "enquanto",
+                        sessionName: "2. Enquanto (while)",
+                        tabName: "01. Validação de Senha",
+                        file: "Aula3/Enquanto/Exercicio01.js",
+                        title: "Exercício 01 • Validação de Senha com While",
+                        subtitle: "Sessão: <strong>Enquanto (while)</strong> • Repete até o usuário acertar a senha (1234).",
+                        cardDesc: "Bloqueia o acesso até a senha correta ser informada.",
+                        metaphors: [{ icon: "🔐", title: "O Cofre Fechado", desc: "Enquanto a chave não for a certa (1234), a porta não abre!" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\n// Entrada de dados: primeira tentativa de senha\nlet senhaInformada = Number(prompt("Digite a senha de acesso: "));\n\n// Laço ENQUANTO: repete enquanto a senha digitada for incorreta\nwhile (senhaInformada !== 1234) {\n    console.log("Senha incorreta! Tente novamente:");\n    senhaInformada = Number(prompt("Digite a senha de acesso: "));\n}\n\n// Saída de dados: exibida após a validação correta\nconsole.log("Acesso concedido! Senha correta.");`,
+                        variables: [{ id: "senhaInformada", label: "senhaInformada", defaultVal: "-" }],
+                        steps: [
+                            { line: 4, msg: "Tentativa 1: 9999 ➔ Senha incorreta!", vars: { "senhaInformada": 9999 }, console: { text: "Senha incorreta! Tente novamente:", isWarn: true } },
+                            { line: 12, msg: "Tentativa 2: 1234 ➔ Acesso liberado!", vars: { "senhaInformada": 1234 }, console: { text: "Acesso concedido! Senha correta.", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Condição do While", title: "1. while (senha !== 1234)", code: "while (senhaInformada !== 1234)", text: "Executa repetidamente ENQUANTO a condição for verdadeira." }],
+                        faq: [{ q: "O que acontece se acertar de primeira?", a: "O while nem chega a rodar nenhuma vez!" }]
+                    },
+                    {
+                        id: "a3_w02",
+                        num: "02",
+                        session: "enquanto",
+                        sessionName: "2. Enquanto (while)",
+                        tabName: "02. Somatório Interativo",
+                        file: "Aula3/Enquanto/Exercicio03.js",
+                        title: "Exercício 02 • Somatório Acumulador com Confirmação",
+                        subtitle: "Sessão: <strong>Enquanto (while)</strong> • Soma números enquanto desejar continuar (S/N).",
+                        cardDesc: "Acumula múltiplos números até o usuário digitar 'N'.",
+                        metaphors: [{ icon: "🛒", title: "O Carrinho de Compras", desc: "Vai somando cada item inserido até o cliente dizer 'Chega!'." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\nlet totalAcumulado = 0;\nlet desejaContinuar = "S";\n\nwhile (desejaContinuar.toUpperCase() === "S") {\n    console.log("\\nValor total acumulado até o momento: " + totalAcumulado);\n    let numeroInserido = Number(prompt("Digite um número para somar ao total: "));\n    totalAcumulado += numeroInserido;\n    desejaContinuar = prompt("Deseja continuar somando? (S/N): ");\n}\n\nconsole.log("\\nProcesso finalizado. Valor total acumulado final: " + totalAcumulado);`,
+                        variables: [{ id: "totalAcumulado", label: "totalAcumulado", defaultVal: "0" }, { id: "desejaContinuar", label: "desejaContinuar", defaultVal: "'S'" }],
+                        steps: [
+                            { line: 8, msg: "Somando 15 + 25 + 10 = 50", vars: { "totalAcumulado": 50, "desejaContinuar": "'N'" }, console: { text: "Total acumulado final: 50", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "amber", tag: "Variável Acumuladora", title: "1. total += numero", code: "totalAcumulado += numeroInserido;", text: "Soma o novo número ao saldo já acumulado." }],
+                        faq: [{ q: "O que é += ?", a: "É o mesmo que total = total + numero." }]
+                    },
+
+                    // LAÇO FAÇA-ENQUANTO (DO-WHILE)
+                    {
+                        id: "a3_f01",
+                        num: "01",
+                        session: "faca",
+                        sessionName: "3. Faça-Enquanto (do-while)",
+                        tabName: "01. Confirmação Saída",
+                        file: "Aula3/Faca/Exercicio01.js",
+                        title: "Exercício 01 • Confirmação de Saída com Do-While",
+                        subtitle: "Sessão: <strong>Faça-Enquanto (do-while)</strong> • Garante que o bloco rode ao menos UMA vez.",
+                        cardDesc: "Executa primeiro e testa a condição no final.",
+                        metaphors: [{ icon: "🔄", title: "Execute Antes de Perguntar", desc: "Diferente do while normal, o do-while sempre roda a 1ª vez com certeza!" }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\nlet resposta;\n\ndo {\n    console.log("\\n--- MENU DO SISTEMA ---");\n    console.log("1. Continuar no sistema");\n    console.log("2. Sair do programa");\n    resposta = prompt("Deseja sair do sistema? (S/N): ");\n} while (resposta.toUpperCase() !== "S");\n\nconsole.log("Programa encerrado com sucesso!");`,
+                        variables: [{ id: "resposta", label: "resposta", defaultVal: "-" }],
+                        steps: [
+                            { line: 9, msg: "Digitou 'N' ➔ Repete menu. Digitou 'S' ➔ Encerra.", vars: { "resposta": "'S'" }, console: { text: "Programa encerrado com sucesso!", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "green", tag: "Teste no Final", title: "1. do { ... } while (...);", code: "} while (resposta.toUpperCase() !== 'S');", text: "A condição só é checada depois de executar o bloco." }],
+                        faq: [{ q: "Qual a diferença pro while?", a: "O while testa no início; o do-while testa no final." }]
+                    },
+
+                    // VETORES (ARRAYS)
+                    {
+                        id: "a3_arr01",
+                        num: "01",
+                        session: "arrays",
+                        sessionName: "4. Vetores (Arrays)",
+                        tabName: "01. Ordem Inversa",
+                        file: "Aula3/Arrays/Exercicio01.js",
+                        title: "Exercício 01 • Ordem Inversa com Vetores",
+                        subtitle: "Sessão: <strong>Vetores (Arrays)</strong> • Preenchimento com <strong>.push()</strong> e leitura regressiva com <strong>i--</strong>.",
+                        cardDesc: "Armazena 10 números e imprime do último ao primeiro.",
+                        metaphors: [
+                            { icon: "🗄️", title: "O Array (numeros = [])", desc: "Uma gaveteira numerada começando na gaveta 0." },
+                            { icon: "📥", title: ".push(num)", desc: "Ação de empurrar o novo item para a próxima gaveta livre." }
+                        ],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\nlet numeros = [];\n\n// Entrada de dados: preenche o vetor com 10 números inteiros\nconsole.log("Digite 10 números inteiros:");\nfor (let i = 0; i < 10; i++) {\n    let num = Number(prompt("Digite o número para a posição " + (i + 1) + ": "));\n    numeros.push(num);\n}\n\n// Saída de dados: exibe os elementos percorrendo o array do último para o primeiro\nconsole.log("\\nNúmeros na ordem inversa:");\nfor (let i = numeros.length - 1; i >= 0; i--) {\n    console.log(numeros[i]);\n}`,
+                        variables: [
+                            { id: "i", label: "Contador i", defaultVal: "-" },
+                            { id: "num", label: "num", defaultVal: "-" },
+                            { id: "length", label: "numeros.length", defaultVal: "0" }
+                        ],
+                        steps: [
+                            { line: 3, msg: "Criando o array vazio: let numeros = []", vars: { "length": 0 }, console: { text: "Digite 10 números inteiros:", isPrompt: true } },
+                            { line: 7, msg: "Preenchendo array com .push()", vars: { "i": 0, "num": 42, "length": 10 }, console: { text: "Lendo 10 itens...", isPrompt: true } },
+                            { line: 14, msg: "Iniciando laço reverso de length - 1 (9) até 0 com i--", vars: { "i": 9, "length": 10 }, console: { text: "Números na ordem inversa:", isWarn: true } },
+                            { line: 15, msg: "Imprimindo elementos de trás para frente", vars: { "i": 0, "length": 10 }, console: { text: "Exibição concluída!", isSuccess: true } }
+                        ],
+                        breakdown: [
+                            {
+                                type: "green",
+                                tag: "Laço Reverso",
+                                title: "1. Por que 'numeros.length - 1'?",
+                                code: "for (let i = numeros.length - 1; i >= 0; i--)",
+                                text: "Como os índices vão de 0 a 9, a última posição é o tamanho (10) menos 1."
+                            }
+                        ],
+                        faq: [
+                            { q: "Por que decrementamos com i--?", a: "Para andar de ré, diminuindo 1 a cada volta (9, 8, 7, ..., 0)." }
+                        ]
+                    },
+                    {
+                        id: "a3_arr02",
+                        num: "02",
+                        session: "arrays",
+                        sessionName: "4. Vetores (Arrays)",
+                        tabName: "02. Pares e Ímpares",
+                        file: "Aula3/Arrays/Exercicio02.js",
+                        title: "Exercício 02 • Separação de Pares e Ímpares em Vetores",
+                        subtitle: "Sessão: <strong>Vetores (Arrays)</strong> • Dois arrays separados usando <strong>pares.push()</strong> e <strong>impares.push()</strong>.",
+                        cardDesc: "Separa 10 números em duas listas distintas.",
+                        metaphors: [{ icon: "📦", title: "Duas Caixas Separadas", desc: "Uma caixa só para números pares e outra caixa só para ímpares." }],
+                        codeRaw: `var prompt = require('prompt-sync')();\n\nlet numeros = [];\nlet pares = [];\nlet impares = [];\n\nfor (let i = 0; i < 10; i++) {\n    let num = Number(prompt("Digite o número " + (i + 1) + ": "));\n    numeros.push(num);\n    if (num % 2 === 0) {\n        pares.push(num);\n    } else {\n        impares.push(num);\n    }\n}\n\nconsole.log("Pares:", pares);\nconsole.log("Ímpares:", impares);`,
+                        variables: [{ id: "pares", label: "pares.length", defaultVal: "0" }, { id: "impares", label: "impares.length", defaultVal: "0" }],
+                        steps: [
+                            { line: 8, msg: "Separando pares e ímpares com if (num % 2 === 0)", vars: { "pares": 5, "impares": 5 }, console: { text: "Pares: [ 2, 4, 6, 8, 10 ]\nÍmpares: [ 1, 3, 5, 7, 9 ]", isSuccess: true } }
+                        ],
+                        breakdown: [{ type: "cyan", tag: "Múltiplos Vetores", title: "1. pares.push(num)", code: "pares.push(num);", text: "Direciona o elemento para o array correto." }],
+                        faq: [{ q: "Os arrays precisam ter o mesmo tamanho?", a: "Não, cada um terá a quantidade de itens que foram adicionados a ele." }]
+                    }
+                ]
+            }
+        };
+
+        let currentModule = 1;
+        let currentFilter = "all";
+        let activeExIndex = 0;
+        let currentStepIndex = 0;
+        let autoPlayInterval = null;
+
+        // 🌈 SMART VS CODE TOKENIZER WITH RAINBOW BRACKETS 🌈
+        function formatVsCode(code) {
+            const lines = code.split('\n');
+            let bracketDepth = 0;
+
+            return lines.map((line, lIdx) => {
+                let formatted = "";
+                let i = 0;
+
+                while (i < line.length) {
+                    // 1. Comments
+                    if (line.substr(i, 2) === '//') {
+                        formatted += `<span class="c-cmt">${escapeHtml(line.substr(i))}</span>`;
+                        break;
+                    }
+
+                    // 2. Strings (Double quote)
+                    if (line[i] === '"') {
+                        let end = line.indexOf('"', i + 1);
+                        if (end === -1) end = line.length;
+                        else end = end + 1;
+                        formatted += `<span class="c-str">${escapeHtml(line.substring(i, end))}</span>`;
+                        i = end;
+                        continue;
+                    }
+
+                    // 3. Strings (Single quote)
+                    if (line[i] === "'") {
+                        let end = line.indexOf("'", i + 1);
+                        if (end === -1) end = line.length;
+                        else end = end + 1;
+                        formatted += `<span class="c-str">${escapeHtml(line.substring(i, end))}</span>`;
+                        i = end;
+                        continue;
+                    }
+
+                    // 4. Rainbow Brackets ( ) { } [ ]
+                    const char = line[i];
+                    if (char === '(' || char === '{' || char === '[') {
+                        const bClass = (bracketDepth % 3 === 0) ? 'c-b1' : (bracketDepth % 3 === 1 ? 'c-b2' : 'c-b3');
+                        formatted += `<span class="${bClass}">${escapeHtml(char)}</span>`;
+                        bracketDepth++;
+                        i++;
+                        continue;
+                    }
+                    if (char === ')' || char === '}' || char === ']') {
+                        bracketDepth = Math.max(0, bracketDepth - 1);
+                        const bClass = (bracketDepth % 3 === 0) ? 'c-b1' : (bracketDepth % 3 === 1 ? 'c-b2' : 'c-b3');
+                        formatted += `<span class="${bClass}">${escapeHtml(char)}</span>`;
+                        i++;
+                        continue;
+                    }
+
+                    // 5. Word tokens (Keywords, Functions, Built-ins, Variables)
+                    if (/[a-zA-Z_$]/.test(char)) {
+                        let start = i;
+                        while (i < line.length && /[a-zA-Z0-9_$]/.test(line[i])) i++;
+                        const word = line.substring(start, i);
+
+                        if (/^(var|let|const|if|else|for|while|do|return|function)$/.test(word)) {
+                            formatted += `<span class="c-kw">${word}</span>`;
+                        } else if (/^(console|Number|Math|Array|String|Boolean)$/.test(word)) {
+                            formatted += `<span class="c-obj">${word}</span>`;
+                        } else if (/^(prompt|require|log|push|toFixed|toUpperCase|toLowerCase|trim|indexOf|pop|shift|min|max)$/.test(word) || (i < line.length && line[i] === '(')) {
+                            formatted += `<span class="c-fn">${word}</span>`;
+                        } else {
+                            formatted += `<span class="c-var">${word}</span>`;
+                        }
+                        continue;
+                    }
+
+                    // 6. Number literals
+                    if (/[0-9]/.test(char)) {
+                        let start = i;
+                        while (i < line.length && /[0-9.]/.test(line[i])) i++;
+                        formatted += `<span class="c-num">${line.substring(start, i)}</span>`;
+                        continue;
+                    }
+
+                    // 7. Operators & Punctuation
+                    if (/[+\-*/%=<>!&|;:,.]/.test(char)) {
+                        formatted += `<span class="c-op">${escapeHtml(char)}</span>`;
+                        i++;
+                        continue;
+                    }
+
+                    // Space or others
+                    formatted += escapeHtml(char);
+                    i++;
+                }
+
+                return { num: lIdx + 1, html: formatted };
+            });
+        }
+
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        function switchModule(modNum) {
+            currentModule = modNum;
+            currentFilter = "all";
+            activeExIndex = 0;
+            currentStepIndex = 0;
+
+            document.querySelectorAll('.module-btn').forEach((btn, idx) => {
+                btn.classList.toggle('active', idx + 1 === modNum);
+            });
+
+            const mod = courseData[modNum];
+            document.getElementById('hubTitle').innerHTML = `<span>🗂️ SESSÕES: ${mod.title.toUpperCase()}</span>`;
+
+            renderSessionFilters();
+            renderExerciseGrid();
+            renderActiveExercise();
+        }
+
+        function renderSessionFilters() {
+            const filterBar = document.getElementById('categoryFilterBar');
+            filterBar.innerHTML = '';
+
+            const sessions = courseData[currentModule].sessions;
+            sessions.forEach((s, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `cat-filter-btn ${s.id === currentFilter ? 'active' : ''}`;
+                btn.textContent = s.name;
+                btn.onclick = () => {
+                    currentFilter = s.id;
+                    renderSessionFilters();
+                    renderExerciseGrid();
+                };
+                filterBar.appendChild(btn);
+            });
+        }
+
+        function renderExerciseGrid() {
+            const grid = document.getElementById('exerciseGrid');
+            grid.innerHTML = '';
+
+            const exercises = courseData[currentModule].exercises;
+
+            exercises.forEach((ex, idx) => {
+                if (currentFilter !== 'all' && ex.session !== currentFilter) {
+                    return;
+                }
+
+                const card = document.createElement('button');
+                card.className = `ex-card-btn ${idx === activeExIndex ? 'active' : ''}`;
+                card.onclick = () => switchExercise(idx);
+
+                card.innerHTML = `
+                    <div class="ex-card-top">
+                        <span class="ex-card-badge">${ex.num}</span>
+                        <span class="ex-card-session-tag">${ex.sessionName}</span>
+                    </div>
+                    <div class="ex-card-title">${ex.tabName}</div>
+                    <div class="ex-card-desc">${ex.cardDesc}</div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function switchExercise(idx) {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+            activeExIndex = idx;
+            currentStepIndex = 0;
+            renderExerciseGrid();
+            renderActiveExercise();
+            window.scrollTo({ top: document.getElementById('exerciseContent').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        function renderActiveExercise() {
+            const exercises = courseData[currentModule].exercises;
+            const ex = exercises[activeExIndex];
+
+            // Metaphors HTML
+            const metaphorsHtml = ex.metaphors.map(m => `
+                <div class="metaphor-card">
+                    <div class="metaphor-icon">${m.icon}</div>
+                    <h3>${m.title}</h3>
+                    <p>${m.desc}</p>
+                </div>
+            `).join('');
+
+            // Highlighted Code with VS Code exact rainbow brackets
+            const highlightedLines = formatVsCode(ex.codeRaw);
+            const codeLinesHtml = highlightedLines.map(cl => `
+                <div class="code-line" id="sim-line-${cl.num}">
+                    <span class="line-num">${cl.num}</span>
+                    <code>${cl.html}</code>
+                </div>
+            `).join('');
+
+            // Variables HTML
+            const variablesHtml = ex.variables.map(v => `
+                <div class="var-slot">
+                    <span class="var-label">${v.label}:</span>
+                    <div class="var-val" id="mem-v_${v.id}">${v.defaultVal}</div>
+                </div>
+            `).join('');
+
+            // Breakdown Cards HTML
+            const breakdownHtml = ex.breakdown.map(b => `
+                <div class="step-card ${b.type}">
+                    <div class="step-tag">${b.tag}</div>
+                    <h3 class="step-title">${b.title}</h3>
+                    <div class="step-code-inline">${escapeHtml(b.code)}</div>
+                    <p>${b.text}</p>
+                </div>
+            `).join('');
+
+            // FAQ HTML
+            const faqHtml = ex.faq.map(f => `
+                <div class="faq-item">
+                    <h4>💡 ${f.q}</h4>
+                    <p>${f.a}</p>
+                </div>
+            `).join('');
+
+            const content = document.getElementById('exerciseContent');
+            content.innerHTML = `
+                <!-- Exercise Header Banner -->
+                <div style="background: rgba(17, 24, 39, 0.7); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.75rem; font-weight: 800; background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 4px;">${ex.sessionName.toUpperCase()}</span>
+                        <span style="font-size: 0.8rem; font-family: 'Fira Code', monospace; color: var(--text-muted);">${ex.file}</span>
+                    </div>
+                    <h2 style="font-size: 1.85rem; font-weight: 800; color: #FFF; margin-bottom: 0.4rem;">${ex.title}</h2>
+                    <p style="color: #CBD5E1; font-size: 1rem;">${ex.subtitle}</p>
+                </div>
+
+                <!-- Metaphor Section -->
+                <section class="metaphor-section">
+                    <h2 class="section-title">📦 Pense nisso como no Mundo Real</h2>
+                    <div class="metaphor-grid">
+                        ${metaphorsHtml}
+                    </div>
+                </section>
+
+                <!-- Simulator Section -->
+                <section class="simulator-section">
+                    <h2 class="section-title">🎮 Simulador Passo a Passo</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                        Clique em <strong>"Avançar 1 Passo"</strong> para ver a linha do código destacada e as variáveis na memória mudando em tempo real!
+                    </p>
+
+                    <div class="sim-controls">
+                        <button class="btn" id="btnNext" onclick="nextStep()">
+                            <span>▶</span> Avançar 1 Passo
+                        </button>
+                        <button class="btn btn-secondary" id="btnAuto" onclick="toggleAutoPlay()">
+                            <span>⚡</span> Executar Tudo
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetSimulation()">
+                            <span>🔄</span> Reiniciar
+                        </button>
+                        <div class="sim-status" id="simStatus">Pronto para iniciar</div>
+                    </div>
+
+                    <div class="sim-grid">
+                        <!-- Left Code Box (VS Code Theme + Rainbow Brackets) -->
+                        <div>
+                            <div style="font-size: 0.85rem; font-weight: 600; color: #9CA3AF; margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
+                                <span>EDITOR JS (VS CODE NATIVO):</span>
+                                <span style="font-size: 0.75rem; color: #4EC9B0;">● Rainbow Brackets Ativo</span>
+                            </div>
+                            <div class="code-box" id="codeBox">
+                                ${codeLinesHtml}
+                            </div>
+                        </div>
+
+                        <!-- Right Memory & Console -->
+                        <div class="memory-panel">
+                            <div class="var-card">
+                                <div class="var-header">
+                                    <span>VARIÁVEIS EM MEMÓRIA</span>
+                                    <span id="memStatusTag" style="color: var(--primary);">FASE INICIAL</span>
+                                </div>
+                                <div class="vars-flex" id="varsContainer">
+                                    ${variablesHtml.length ? variablesHtml : '<span style="color: #6B7280; font-size: 0.85rem;">Nenhuma variável necessária</span>'}
+                                </div>
+                            </div>
+
+                            <div class="var-card" style="padding: 0.75rem;">
+                                <div class="var-header" style="margin-bottom: 0.4rem;">
+                                    <span>TERMINAL / CONSOLE</span>
+                                </div>
+                                <div class="console-box" id="simConsole">
+                                    <div class="console-prompt">> Sistema pronto para iniciar...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Detailed Step by Step Breakdown -->
+                <section class="breakdown-section">
+                    <h2 class="section-title">📖 Explicação Detalhada do Código</h2>
+                    ${breakdownHtml}
+                </section>
+
+                <!-- FAQ Section -->
+                <section>
+                    <h2 class="section-title">💡 Perguntas Rápidas para Fixar</h2>
+                    <div class="faq-grid">
+                        ${faqHtml}
+                    </div>
+                </section>
+            `;
+
+            // Update Pagination buttons
+            document.getElementById('btnPrev').disabled = activeExIndex === 0;
+            document.getElementById('btnNextEx').disabled = activeExIndex === exercises.length - 1;
+        }
+
+        function nextStep() {
+            const exercises = courseData[currentModule].exercises;
+            const ex = exercises[activeExIndex];
+            if (currentStepIndex >= ex.steps.length) {
+                document.getElementById('simStatus').textContent = "✅ Execução finalizada com sucesso!";
+                document.getElementById('btnNext').disabled = true;
+                if (autoPlayInterval) {
+                    clearInterval(autoPlayInterval);
+                    autoPlayInterval = null;
+                    document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+                }
+                return;
+            }
+
+            const step = ex.steps[currentStepIndex];
+
+            // Highlight line
+            document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+            const lineEl = document.getElementById(`sim-line-${step.line}`);
+            if (lineEl) lineEl.classList.add('active');
+
+            // Update status
+            document.getElementById('simStatus').textContent = step.msg;
+            document.getElementById('memStatusTag').textContent = `PASSO ${currentStepIndex + 1}/${ex.steps.length}`;
+
+            // Update memory vars
+            Object.keys(step.vars).forEach(varName => {
+                const el = document.getElementById(`mem-v_${varName}`);
+                if (el) {
+                    el.textContent = step.vars[varName];
+                }
+            });
+
+            // Console output
+            if (step.console) {
+                const con = document.getElementById('simConsole');
+                const line = document.createElement('div');
+                line.className = 'console-line';
+                if (step.console.isPrompt) line.className += ' console-prompt';
+                if (step.console.isSuccess) line.style.color = '#4ADE80';
+                if (step.console.isWarn) line.className += ' console-warn';
+                line.textContent = step.console.text;
+                con.appendChild(line);
+                con.scrollTop = con.scrollHeight;
+            }
+
+            currentStepIndex++;
+        }
+
+        function toggleAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+                return;
+            }
+
+            document.getElementById('btnAuto').innerHTML = '<span>⏸</span> Pausar';
+            autoPlayInterval = setInterval(() => {
+                const exercises = courseData[currentModule].exercises;
+                const ex = exercises[activeExIndex];
+                if (currentStepIndex >= ex.steps.length) {
+                    clearInterval(autoPlayInterval);
+                    autoPlayInterval = null;
+                    document.getElementById('btnAuto').innerHTML = '<span>⚡</span> Executar Tudo';
+                    nextStep();
+                } else {
+                    nextStep();
+                }
+            }, 800);
+        }
+
+        function resetSimulation() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                const btnAuto = document.getElementById('btnAuto');
+                if (btnAuto) btnAuto.innerHTML = '<span>⚡</span> Executar Tudo';
+            }
+            currentStepIndex = 0;
+            renderActiveExercise();
+        }
+
+        function navigatePrev() {
+            if (activeExIndex > 0) switchExercise(activeExIndex - 1);
+        }
+
+        function navigateNext() {
+            const exercises = courseData[currentModule].exercises;
+            if (activeExIndex < exercises.length - 1) switchExercise(activeExIndex + 1);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            switchModule(1);
+        });
+    </script>
+</body>
+</html>
